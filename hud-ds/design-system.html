@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Estrateg[IA] — Design System</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon-180.png">
+<link rel="stylesheet" href="styles.css">
+<style>
+  *{box-sizing:border-box}
+  html{scrollbar-width:none;-ms-overflow-style:none}
+  html::-webkit-scrollbar{display:none}
+  body{margin:0;font-family:var(--font-body);background:var(--ink-900);color:var(--on-dark-soft)}
+
+  /* ── Top tab bar ── */
+  .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:6px;padding:0 22px;background:rgba(11,10,9,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line-on-dark);overflow-x:auto;scrollbar-width:none}
+  .topbar::-webkit-scrollbar{display:none}
+  .brandmark{font-family:var(--font-display);font-weight:800;font-size:19px;letter-spacing:-.02em;padding-right:18px;margin-right:8px;border-right:1px solid var(--line-on-dark);white-space:nowrap}
+  .tab{appearance:none;border:none;background:transparent;cursor:pointer;font-family:var(--font-body);font-weight:500;font-size:15px;color:var(--on-dark-muted);padding:18px 16px;position:relative;white-space:nowrap;transition:color .2s}
+  .tab:hover{color:var(--on-dark)}
+  .tab.active{color:var(--on-dark);font-weight:600}
+  .tab.active::after{content:"";position:absolute;left:16px;right:16px;bottom:-1px;height:2px;background:var(--brand)}
+
+  .layout{display:grid;grid-template-columns:266px 1fr;min-height:calc(100vh - 57px)}
+
+  /* ── Sidebar ── */
+  aside{position:sticky;top:57px;align-self:start;height:calc(100vh - 57px);overflow-y:auto;scrollbar-width:none;background:var(--ink-800);border-right:1px solid var(--line-on-dark);padding:24px 18px;display:flex;flex-direction:column;gap:4px}
+  aside::-webkit-scrollbar{display:none}
+  .navside{display:none;flex-direction:column;gap:4px}
+  .navside.active{display:flex}
+  .navhead{font-family:var(--font-display);font-weight:700;font-size:17px;padding:8px 14px 12px}
+  .navlink{display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;color:var(--on-dark-muted);font-family:var(--font-body);font-weight:500;font-size:15px;padding:11px 14px;border-radius:10px;transition:background .2s,color .2s;cursor:pointer}
+  .navlink:hover{color:var(--on-dark);background:rgba(255,255,255,.04)}
+  .ext{width:13px;height:13px;flex:none;opacity:.7}
+  .navgroup{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--on-dark-subtle);padding:20px 14px 8px}
+
+  /* ── Content ── */
+  .content{min-width:0}
+  .panel{display:none}
+  .panel.active{display:block}
+  header{padding:clamp(40px,6vw,76px) var(--page-gutter) clamp(26px,4vw,44px);background:radial-gradient(900px 480px at 18% -10%,rgba(230,59,22,.34),transparent 60%);border-bottom:1px solid var(--line-on-dark)}
+  .kick{font-family:var(--font-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--brand-bright);margin-bottom:18px}
+  h1{font-family:var(--font-display);font-weight:800;font-size:clamp(40px,7vw,92px);line-height:.86;letter-spacing:-.04em;margin:0;text-transform:uppercase}
+  .sub{margin:20px 0 0;max-width:640px;font-size:16px;line-height:1.6;color:var(--on-dark-muted)}
+  main{padding:clamp(34px,5vw,64px) var(--page-gutter) 140px;display:flex;flex-direction:column;gap:80px}
+  section{scroll-margin-top:80px}
+  .sechead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:0 0 12px;padding-bottom:14px;border-bottom:1px solid var(--line-on-dark)}
+  .sechead h2{font-family:var(--font-display);font-weight:800;font-size:clamp(26px,3.4vw,40px);letter-spacing:-.02em;margin:0}
+  .sechead .idx{font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--brand-bright)}
+  .secnote{margin:0 0 26px;max-width:680px;font-size:15px;line-height:1.65;color:var(--on-dark-muted)}
+  .grid{display:grid;gap:24px}
+
+  figure{margin:0;border:1px solid var(--line-on-dark);border-radius:var(--radius-card);overflow:hidden;background:var(--ink-800)}
+  figure iframe{display:block;width:100%;border:0;background:var(--ink-800);overflow:hidden}
+  figcaption{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:14px 18px;border-top:1px solid var(--line-on-dark)}
+  figcaption .t{font-family:var(--font-display);font-weight:700;font-size:16px}
+  figcaption .d{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:var(--on-dark-subtle);text-align:right;max-width:60%}
+
+  /* Content cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+  .card{border:1px solid var(--line-on-dark);border-radius:var(--radius-card);padding:24px;background:var(--ink-card)}
+  .card h3{font-family:var(--font-display);font-weight:700;font-size:19px;margin:0 0 10px}
+  .card p{margin:0;font-size:14px;line-height:1.6;color:var(--on-dark-muted)}
+  .card .lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brand-bright);margin-bottom:14px}
+  ul.clean{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  ul.clean li{display:flex;gap:11px;font-size:14px;line-height:1.55;color:var(--on-dark-muted)}
+  ul.clean li b{color:var(--on-dark-soft);font-weight:600}
+  .tick{color:var(--brand);font-weight:700;flex:none}
+
+  /* Do / Don't */
+  .dd{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .dd .box{border:1px solid var(--line-on-dark);border-radius:var(--radius-card);padding:22px;background:var(--ink-card)}
+  .dd .h{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+  .dd .do .h{color:var(--success)}
+  .dd .dont .h{color:var(--danger)}
+  .dd p{margin:0 0 9px;font-size:14px;line-height:1.5;color:var(--on-dark-muted)}
+  .dd p:last-child{margin-bottom:0}
+
+  .specrow{display:flex;flex-wrap:wrap;gap:10px}
+  .chip{font-family:var(--font-mono);font-size:12px;color:var(--on-dark-soft);background:var(--ink-card);border:1px solid var(--line-on-dark);border-radius:var(--radius-pill);padding:9px 15px}
+  .chip b{color:var(--brand-bright)}
+  a.linkrow{display:flex;align-items:center;justify-content:space-between;gap:12px;text-decoration:none;color:var(--on-dark-soft);border:1px solid var(--line-on-dark);border-radius:var(--radius-xs);padding:16px 20px;background:var(--ink-card);transition:border-color .2s,background .2s}
+  a.linkrow:hover{border-color:var(--brand);background:rgba(230,59,22,.08)}
+  a.linkrow .meta{font-family:var(--font-mono);font-size:11px;color:var(--on-dark-subtle)}
+
+  .filegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:18px}
+  a.filecard{display:flex;flex-direction:column;text-decoration:none;border:1px solid var(--line-on-dark);border-radius:var(--radius-card);overflow:hidden;background:var(--ink-card);transition:border-color .2s,transform .2s}
+  a.filecard:hover{border-color:var(--brand);transform:translateY(-3px)}
+  a.filecard .prev{height:120px;display:flex;align-items:center;justify-content:center;background:conic-gradient(from 45deg,#1a1714 0 25%,#141210 0 50%,#1a1714 0 75%,#141210 0) 0 0/22px 22px;border-bottom:1px solid var(--line-on-dark)}
+  a.filecard .prev img{max-width:78px;max-height:84px;object-fit:contain}
+  a.filecard .prev.lockup{background:var(--ink-900);font-family:var(--font-display);font-weight:800;font-size:26px;letter-spacing:-.02em;color:var(--on-dark)}
+  a.filecard .ft{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px}
+  a.filecard .ft .nm{font-family:var(--font-body);font-weight:500;font-size:13.5px;color:var(--on-dark-soft)}
+  a.filecard .ft .mt{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;color:var(--on-dark-subtle);white-space:nowrap}
+
+  @media (max-width:880px){
+    .layout{grid-template-columns:1fr}
+    aside{position:static;height:auto}
+    .dd{grid-template-columns:1fr}
+  }
+</style></head>
+<body>
+
+<div class="topbar">
+  <span class="brandmark">Estrateg<span style="color:var(--brand)">[IA]</span></span>
+  <button class="tab active" data-tab="marca">Marca</button>
+  <button class="tab" data-tab="copy">Copywriting</button>
+  <button class="tab" data-tab="produto">Produto</button>
+  <button class="tab" data-tab="manual">Manual</button>
+  <button class="tab" data-tab="recursos">Recursos</button>
+</div>
+
+<div class="layout">
+  <aside>
+    <!-- MARCA -->
+    <nav class="navside active" data-tab="marca">
+      <div class="navhead">Marca</div>
+      <a class="navlink" data-target="m-logo">Logo</a>
+      <a class="navlink" data-target="m-cores">Cores</a>
+      <a class="navlink" data-target="m-tipografia">Tipografia</a>
+      <a class="navlink" data-target="m-stack">Sistema base</a>
+      <a class="navlink" data-target="m-movimento">Movimento</a>
+      <a class="navlink" data-target="m-merch">Merch</a>
+      <a class="navlink" data-target="m-estrategia">Estratégia de marca</a>
+    </nav>
+    <!-- COPY -->
+    <nav class="navside" data-tab="copy">
+      <div class="navhead">Copywriting</div>
+      <a class="navlink" data-target="c-tom">Tom de voz</a>
+      <a class="navlink" data-target="c-nomenclatura">Nomenclatura</a>
+      <a class="navlink" data-target="c-estilo">Guia de estilo</a>
+      <a class="navlink" data-target="c-padroes">Padrões</a>
+    </nav>
+    <!-- PRODUTO -->
+    <nav class="navside" data-tab="produto">
+      <div class="navhead">Produto</div>
+      <a class="navlink" data-target="p-desenvolvimento">Desenvolvimento</a>
+      <a class="navlink" data-target="p-acessibilidade">Acessibilidade</a>
+      <a class="navlink" data-target="p-fundacao">Fundação</a>
+      <a class="navlink" data-target="p-base">Base</a>
+      <a class="navlink" data-target="p-formularios">Formulários</a>
+      <a class="navlink" data-target="p-componentes">Componentes</a>
+    </nav>
+    <!-- MANUAL -->
+    <nav class="navside" data-tab="manual">
+      <div class="navhead">Manual</div>
+      <a class="navlink" data-target="h-historia">História</a>
+      <a class="navlink" data-target="h-cultura">Cultura</a>
+      <a class="navlink" data-target="h-links">Links rápidos</a>
+    </nav>
+    <!-- RECURSOS -->
+    <nav class="navside" data-tab="recursos">
+      <div class="navhead">Recursos</div>
+      <a class="navlink" data-target="r-fontes">Fontes</a>
+      <a class="navlink" data-target="r-appicon">App icon & favicon</a>
+      <a class="navlink" data-target="r-icones">Ícones & Spots</a>
+      <a class="navlink" data-target="r-marca">Diretrizes de marca</a>
+      <a class="navlink" data-target="r-logo">Arquivos de logo</a>
+    </nav>
+  </aside>
+
+  <div class="content">
+
+    <!-- ══════════ MARCA ══════════ -->
+    <div class="panel active" data-tab="marca">
+      <header>
+        <div class="kick">[ MARCA · v1 ]</div>
+        <h1>Marca</h1>
+        <p class="sub">Orange-red sobre quase-preto, Funnel Display gigante, labels em colchetes e o ritmo de dobras claro/escuro. A identidade do Estrateg[IA].</p>
+      </header>
+      <main>
+        <section id="m-logo">
+          <div class="sechead"><h2>Logo</h2><span class="idx">[ 01 ]</span></div>
+          <p class="secnote">O lockup principal e o motif do colchete <strong style="color:var(--brand-bright)">[IA]</strong>, que se repete como dispositivo de marcação em toda a marca.</p>
+          <div class="grid"><figure><iframe src="guidelines/brand-mark.html?v=5" height="420" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Brand mark</span><span class="d">lockup · motif [IA] · dobras</span></figcaption></figure></div>
+        </section>
+        <section id="m-cores">
+          <div class="sechead"><h2>Cores</h2><span class="idx">[ 02 ]</span></div>
+          <p class="secnote">Orange-red é o único matiz de marca. Tudo o mais é neutro: quase-preto ou creme quente. As seções alternam dobras escuras e claras, nunca duas iguais seguidas.</p>
+          <div class="grid">
+            <figure><iframe src="guidelines/color-brand.html?v=5" height="186" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Marca</span><span class="d">o único matiz de marca</span></figcaption></figure>
+            <figure><iframe src="guidelines/color-dark.html?v=5" height="186" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Dobras escuras</span><span class="d">superfícies quase-preto</span></figcaption></figure>
+            <figure><iframe src="guidelines/color-light.html?v=5" height="186" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Dobras claras</span><span class="d">superfícies creme</span></figcaption></figure>
+            <figure><iframe src="guidelines/color-semantic.html?v=5" height="186" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Semânticas</span><span class="d">funcionais, uso contido</span></figcaption></figure>
+          </div>
+        </section>
+        <section id="m-tipografia">
+          <div class="sechead"><h2>Tipografia</h2><span class="idx">[ 03 ]</span></div>
+          <p class="secnote">Funnel Display para títulos gigantes, Poppins para o corpo e JetBrains Mono para os labels técnicos em colchetes.</p>
+          <div class="grid"><figure><iframe src="guidelines/typography.html?v=5" height="520" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Escala tipográfica</span><span class="d">Funnel Display · Poppins · JetBrains Mono</span></figcaption></figure></div>
+        </section>
+        <section id="m-stack">
+          <div class="sechead"><h2>Sistema base</h2><span class="idx">[ 04 ]</span></div>
+          <p class="secnote">A pilha de construção: ritmo de espaçamento base-4, raios e os componentes que montam cada tela.</p>
+          <div class="grid">
+            <figure><iframe src="guidelines/spacing.html?v=5" height="400" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Espaçamento & raio</span><span class="d">base-4 · pill & card</span></figcaption></figure>
+            <figure><iframe src="guidelines/button.html?v=6" height="362" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Botão</span><span class="d">sólido · ghost · link</span></figcaption></figure>
+            <figure><iframe src="guidelines/badge.html?v=5" height="376" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Label & badge</span><span class="d">[ … ] · status · chips</span></figcaption></figure>
+            <figure><iframe src="guidelines/product-card.html?v=5" height="460" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Card de produto</span><span class="d">escuro + destaque</span></figcaption></figure>
+            <figure><iframe src="guidelines/mentor-card.html?v=5" height="540" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Card de mentora</span><span class="d">retrato · lockup de nome</span></figcaption></figure>
+          </div>
+        </section>
+        <section id="m-movimento">
+          <div class="sechead"><h2>Movimento</h2><span class="idx">[ 05 ]</span></div>
+          <p class="secnote">Easing lento e confiante. Reveals no scroll, marquees, hover magnético, tilt 3D e carrossel arrastável. Sempre respeitando <code>prefers-reduced-motion</code>.</p>
+          <div class="grid"><figure><iframe src="guidelines/motion.html?v=5" height="384" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Movimento & interação</span><span class="d">reveal · marquee · tilt · drag</span></figcaption></figure></div>
+        </section>
+        <section id="m-merch">
+          <div class="sechead"><h2>Merch</h2><span class="idx">[ 06 ]</span></div>
+          <p class="secnote">A marca aplicada a produtos físicos da comunidade. Sempre o lockup em alto contraste, o motif [IA] e o laranja como único respiro de cor.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ Vestuário ]</div><h3>Camiseta preta</h3><p>Lockup branco no peito, motif [IA] em laranja. Algodão preto carvão, etiqueta com a frase "A IA trabalha pra você".</p></div>
+            <div class="card"><div class="lab">[ Adesivos ]</div><h3>Sticker pack</h3><p>O colchete [IA], o spot ✦ e os labels [ 01 ]…[ 03 ]. Recorte vivo, vinil fosco.</p></div>
+            <div class="card"><div class="lab">[ Escritório ]</div><h3>Caderno técnico</h3><p>Capa creme, grid pontilhado, marca d'água ESTRATÉG[IA] na contracapa.</p></div>
+            <div class="card"><div class="lab">[ Digital ]</div><h3>Wallpapers</h3><p>Fundo quase-preto com glow laranja e o nome gigante, para desktop e celular.</p></div>
+          </div>
+        </section>
+        <section id="m-estrategia">
+          <div class="sechead"><h2>Estratégia de marca</h2><span class="idx">[ 07 ]</span></div>
+          <p class="secnote">A base que sustenta cada decisão visual e de conteúdo.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ Posicionamento ]</div><h3>IA aplicada à estratégia em saúde</h3><p>Tira o gestor da saúde do operacional e devolve tempo, clareza e ferramentas prontas.</p></div>
+            <div class="card"><div class="lab">[ Arquétipo ]</div><h3>A Mentora</h3><p>Especialista acessível que ensina o caminho e entrega o atalho. Autoridade sem arrogância.</p></div>
+            <div class="card"><div class="lab">[ Promessa ]</div><h3>Tempo de volta</h3><p>A IA trabalha pra você, não o contrário. Decidir, crescer e cuidar melhor dos pacientes.</p></div>
+            <div class="card"><div class="lab">[ Três camadas ]</div><h3>Ensino · Skills · Serviço</h3><p>Canal grátis no YouTube, skills da Claude prontas e agentes sob medida.</p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════ COPYWRITING ══════════ -->
+    <div class="panel" data-tab="copy">
+      <header>
+        <div class="kick">[ COPYWRITING ]</div>
+        <h1>Copywriting</h1>
+        <p class="sub">Português do Brasil, direto e caloroso. Anti-corporativo. O texto carrega a mesma engenharia dos labels em colchetes.</p>
+      </header>
+      <main>
+        <section id="c-tom">
+          <div class="sechead"><h2>Tom de voz</h2><span class="idx">[ 01 ]</span></div>
+          <p class="secnote">Falamos como quem entende do operacional da saúde e respeita o tempo de quem lê. Quatro princípios:</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ 01 ]</div><h3>Direto</h3><p>Frases curtas. Uma ideia por frase. Cortamos advérbio e enrolação.</p></div>
+            <div class="card"><div class="lab">[ 02 ]</div><h3>Caloroso</h3><p>Falamos "você", olhando no olho. Empatia com quem vive apagando incêndio.</p></div>
+            <div class="card"><div class="lab">[ 03 ]</div><h3>Confiante</h3><p>Mostramos que funciona, sem promessa mágica. Prova antes de venda.</p></div>
+            <div class="card"><div class="lab">[ 04 ]</div><h3>Técnico na medida</h3><p>O colchete e o mono dão o ar "engenheiro". Jargão só quando agrega.</p></div>
+          </div>
+        </section>
+        <section id="c-nomenclatura">
+          <div class="sechead"><h2>Nomenclatura</h2><span class="idx">[ 02 ]</span></div>
+          <p class="secnote">Como nomeamos a marca, os produtos e os elementos de interface.</p>
+          <ul class="clean">
+            <li><span class="tick">▹</span><span><b>Estrateg[IA]</b> — sempre com o colchete no "IA". Nunca "EstrategIA" ou "Estratégia IA".</span></li>
+            <li><span class="tick">▹</span><span><b>Skills</b> nomeadas pela função do gestor: "Gestor de CCIH", "Segurança do Paciente", "Dashboards".</span></li>
+            <li><span class="tick">▹</span><span><b>Labels de seção</b> em colchetes e mono: [ COMO FUNCIONA ], [ 01 ], [ DOC.04 ].</span></li>
+            <li><span class="tick">▹</span><span><b>Pacotes</b> com nome direto: "Pacote de Skills dos Gestores", "Crie seu SaaS do zero".</span></li>
+          </ul>
+        </section>
+        <section id="c-estilo">
+          <div class="sechead"><h2>Guia de estilo</h2><span class="idx">[ 03 ]</span></div>
+          <p class="secnote">Regras de escrita que mantêm o texto consistente e humano.</p>
+          <div class="dd">
+            <div class="box do"><div class="h">✓ Faça</div>
+              <p>Vírgula, dois-pontos ou parênteses para pausar.</p>
+              <p>"R$96", "+1.500 horas" — número com separador BR.</p>
+              <p>Primeira letra maiúscula; resto natural.</p>
+              <p>Verbos no presente, voz ativa.</p>
+            </div>
+            <div class="box dont"><div class="h">✕ Evite</div>
+              <p>Travessão "—". Entrega cara de IA.</p>
+              <p>CAIXA ALTA em frase inteira (só em labels mono).</p>
+              <p>Métricas inventadas. O canal é novo.</p>
+              <p>Jargão corporativo: "sinergia", "disruptivo".</p>
+            </div>
+          </div>
+        </section>
+        <section id="c-padroes">
+          <div class="sechead"><h2>Padrões</h2><span class="idx">[ 04 ]</span></div>
+          <p class="secnote">Estruturas de texto reutilizáveis.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ Headline ]</div><h3>Sujeito + ação + alívio</h3><p>"A IA tira o gestor da saúde do operacional." A palavra-chave ganha o laranja.</p></div>
+            <div class="card"><div class="lab">[ CTA ]</div><h3>Verbo no infinitivo + ›</h3><p>"Conhecer o canal ›", "Agendar uma conversa", "Quero o pacote".</p></div>
+            <div class="card"><div class="lab">[ Label ]</div><h3>[ TEMA ] em mono</h3><p>Abre cada seção. Curto, em caixa alta, entre colchetes.</p></div>
+            <div class="card"><div class="lab">[ Prova ]</div><h3>Depoimento em 1ª pessoa</h3><p>"Eu vivia perdida em planilha…" Nome + papel do gestor embaixo.</p></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════ PRODUTO ══════════ -->
+    <div class="panel" data-tab="produto">
+      <header>
+        <div class="kick">[ PRODUTO ]</div>
+        <h1>Produto</h1>
+        <p class="sub">Como o sistema vira código: tokens, acessibilidade, fundação, base, formulários e componentes.</p>
+      </header>
+      <main>
+        <section id="p-desenvolvimento">
+          <div class="sechead"><h2>Desenvolvimento</h2><span class="idx">[ 01 ]</span></div>
+          <p class="secnote">Linke o <code>styles.css</code> (ele importa todos os tokens) e use as variáveis <code>--*</code>. Nunca chumbe um hex que tenha token.</p>
+          <div class="specrow">
+            <span class="chip">@import <b>styles.css</b></span>
+            <span class="chip">tokens/<b>colors</b>.css</span>
+            <span class="chip">tokens/<b>typography</b>.css</span>
+            <span class="chip">tokens/<b>spacing</b>.css</span>
+            <span class="chip">tokens/<b>effects</b>.css</span>
+            <span class="chip">tokens/<b>fonts</b>.css</span>
+          </div>
+        </section>
+        <section id="p-acessibilidade">
+          <div class="sechead"><h2>Acessibilidade</h2><span class="idx">[ 02 ]</span></div>
+          <p class="secnote">Energia visual nunca às custas de quem usa.</p>
+          <ul class="clean">
+            <li><span class="tick">✓</span><span><b>Contraste:</b> texto sobre dobra escura usa <code>--on-dark</code>/<code>--on-dark-muted</code>; sobre creme, <code>--on-light</code>. Mínimo AA.</span></li>
+            <li><span class="tick">✓</span><span><b>Alvos de toque:</b> nunca menores que 44px. Botões pill com padding generoso.</span></li>
+            <li><span class="tick">✓</span><span><b>Movimento:</b> reveals e tilt respeitam <code>prefers-reduced-motion</code>.</span></li>
+            <li><span class="tick">✓</span><span><b>Foco:</b> inputs com anel laranja de 3px. Modal fecha com Esc.</span></li>
+            <li><span class="tick">✓</span><span><b>Laranja sozinho não comunica:</b> sempre acompanha texto ou ícone.</span></li>
+          </ul>
+        </section>
+        <section id="p-fundacao">
+          <div class="sechead"><h2>Fundação</h2><span class="idx">[ 03 ]</span></div>
+          <p class="secnote">Princípios que regem qualquer tela nova.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ 01 ]</div><h3>Dobras alternadas</h3><p>Escuro e claro se revezam. Nunca duas dobras iguais seguidas.</p></div>
+            <div class="card"><div class="lab">[ 02 ]</div><h3>Respiro generoso</h3><p>Seções com padding vertical amplo. O conteúdo respira.</p></div>
+            <div class="card"><div class="lab">[ 03 ]</div><h3>Um acento só</h3><p>Laranja é o único destaque. Se tudo grita, nada grita.</p></div>
+            <div class="card"><div class="lab">[ 04 ]</div><h3>Menos é mais</h3><p>Sem dado decorativo, sem ícone à toa. Cada elemento ganha o lugar.</p></div>
+          </div>
+        </section>
+        <section id="p-base">
+          <div class="sechead"><h2>Base</h2><span class="idx">[ 04 ]</span></div>
+          <p class="secnote">Reset, grid e medidas de container.</p>
+          <ul class="clean">
+            <li><span class="tick">▹</span><span><b>Container:</b> máx. <code>--container-max</code> 1280px; estreito 1040px.</span></li>
+            <li><span class="tick">▹</span><span><b>Gutter:</b> <code>--section-pad-x</code> 6vw; hero <code>--page-gutter</code> clamp(28px,7vw,120px).</span></li>
+            <li><span class="tick">▹</span><span><b>Grid:</b> CSS grid com <code>gap</code>. Nada de margens soltas entre irmãos.</span></li>
+            <li><span class="tick">▹</span><span><b>Seleção:</b> fundo laranja, texto branco, em toda a marca.</span></li>
+          </ul>
+        </section>
+        <section id="p-formularios">
+          <div class="sechead"><h2>Formulários</h2><span class="idx">[ 05 ]</span></div>
+          <p class="secnote">Campos no tema escuro, com foco laranja e label em mono.</p>
+          <div class="grid"><figure><iframe src="guidelines/forms.html?v=6" height="470" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Formulário</span><span class="d">input · select · textarea · foco</span></figcaption></figure></div>
+        </section>
+        <section id="p-componentes">
+          <div class="sechead"><h2>Componentes</h2><span class="idx">[ 06 ]</span></div>
+          <p class="secnote">Os blocos prontos da marca.</p>
+          <div class="grid">
+            <figure><iframe src="guidelines/button.html?v=6" height="362" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Botão</span><span class="d">sólido · ghost · link</span></figcaption></figure>
+            <figure><iframe src="guidelines/badge.html?v=5" height="376" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Label & badge</span><span class="d">[ … ] · status · chips</span></figcaption></figure>
+            <figure><iframe src="guidelines/product-card.html?v=5" height="460" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Card de produto</span><span class="d">escuro + destaque</span></figcaption></figure>
+            <figure><iframe src="guidelines/mentor-card.html?v=5" height="540" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Card de mentora</span><span class="d">retrato · lockup</span></figcaption></figure>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════ MANUAL ══════════ -->
+    <div class="panel" data-tab="manual">
+      <header>
+        <div class="kick">[ MANUAL ]</div>
+        <h1>Manual</h1>
+        <p class="sub">Quem está por trás do Estrateg[IA], no que acreditamos e onde encontrar tudo.</p>
+      </header>
+      <main>
+        <section id="h-historia">
+          <div class="sechead"><h2>História</h2><span class="idx">[ 01 ]</span></div>
+          <p class="secnote">Por que o Estrateg[IA] existe.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ A origem ]</div><h3>Rosa Kethllyn</h3><p>Vi de perto o gestor da saúde preso no operacional, sem tempo de pensar em estratégia e sem tempo de virar especialista em IA.</p></div>
+            <div class="card"><div class="lab">[ A virada ]</div><h3>IA aplicada à estratégia</h3><p>Passei a construir agentes, frameworks e ferramentas que devolvem o gestor pro que importa: decidir, crescer e cuidar melhor dos pacientes.</p></div>
+            <div class="card"><div class="lab">[ Hoje ]</div><h3>Um ecossistema</h3><p>Ensino o básico de graça no canal, ofereço skills prontas e crio agentes sob medida. A lógica: você vê funcionar e escolhe o caminho.</p></div>
+          </div>
+        </section>
+        <section id="h-cultura">
+          <div class="sechead"><h2>Cultura</h2><span class="idx">[ 02 ]</span></div>
+          <p class="secnote">Os valores que guiam o trabalho.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ 01 ]</div><h3>Ensinar primeiro</h3><p>A autoridade vem de mostrar, não de prometer. O canal faz o trabalho pesado.</p></div>
+            <div class="card"><div class="lab">[ 02 ]</div><h3>Tempo é o ativo</h3><p>Tudo que fazemos devolve horas pro gestor. Eficiência com propósito.</p></div>
+            <div class="card"><div class="lab">[ 03 ]</div><h3>Sem fumaça</h3><p>Nada de número inventado ou jargão. Verdade, mesmo quando é cedo demais.</p></div>
+            <div class="card"><div class="lab">[ 04 ]</div><h3>Cuidar de quem cuida</h3><p>No fim, a IA serve pra cuidar melhor dos pacientes.</p></div>
+          </div>
+        </section>
+        <section id="h-links">
+          <div class="sechead"><h2>Links rápidos</h2><span class="idx">[ 03 ]</span></div>
+          <p class="secnote">Atalhos para os arquivos e telas do ecossistema.</p>
+          <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+            <a class="linkrow" href="../Estrateg[IA].dc.html"><span>Site Estrateg[IA]</span><span class="meta">.dc.html →</span></a>
+            <a class="linkrow" href="readme.md"><span>Guia completo</span><span class="meta">readme.md →</span></a>
+            <a class="linkrow" href="styles.css"><span>Tokens / CSS</span><span class="meta">styles.css →</span></a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ══════════ RECURSOS ══════════ -->
+    <div class="panel" data-tab="recursos">
+      <header>
+        <div class="kick">[ RECURSOS ]</div>
+        <h1>Recursos</h1>
+        <p class="sub">Fontes, ícones, diretrizes de uso da marca e os arquivos de logo.</p>
+      </header>
+      <main>
+        <section id="r-fontes">
+          <div class="sechead"><h2>Fontes</h2><span class="idx">[ 01 ]</span></div>
+          <p class="secnote">Três famílias, carregadas via Google Fonts em <code>tokens/fonts.css</code>.</p>
+          <div class="cards">
+            <div class="card"><div class="lab">[ Display ]</div><h3 style="font-family:var(--font-display);font-size:30px">Funnel Display</h3><p>Títulos e o nome gigante. Pesos 700/800, tracking apertado, caixa alta.</p></div>
+            <div class="card"><div class="lab">[ Corpo ]</div><h3 style="font-family:var(--font-body);font-size:26px">Poppins</h3><p>Texto corrido e UI. Pesos 400/500/600.</p></div>
+            <div class="card"><div class="lab">[ Mono ]</div><h3 style="font-family:var(--font-mono);font-size:22px">JetBrains Mono</h3><p>Labels em colchetes e micro-copy técnico. Caixa alta, tracking largo.</p></div>
+          </div>
+        </section>
+        <section id="r-appicon">
+          <div class="sechead"><h2>App icon &amp; favicon</h2><span class="idx">[ 02 ]</span></div>
+          <p class="secnote">O mark da marca: uma bússola/viewfinder com a seta no centro e os losangos laranja nos quatro pontos. Versões para fundo escuro e claro, mais o glifo isolado.</p>
+          <div class="grid"><figure><iframe src="guidelines/app-icon.html?v=6" height="300" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">App icon &amp; favicon</span><span class="d">on dark · on light · glifo</span></figcaption></figure></div>
+        </section>
+        <section id="r-icones">
+          <div class="sechead"><h2>Ícones & Spots</h2><span class="idx">[ 03 ]</span></div>
+          <p class="secnote">Ícones de traço (2px, cantos vivos) e os spots da marca: ✦, &gt;&gt;&gt; e os labels [ 01 ].</p>
+          <div class="grid"><figure><iframe src="guidelines/icons-spots.html?v=5" height="300" scrolling="no" loading="lazy"></iframe><figcaption><span class="t">Ícones & Spots</span><span class="d">traço 2px · ✦ · [ 01 ]</span></figcaption></figure></div>
+        </section>
+        <section id="r-marca">
+          <div class="sechead"><h2>Diretrizes de marca</h2><span class="idx">[ 04 ]</span></div>
+          <p class="secnote">Como usar (e como não usar) o lockup.</p>
+          <div class="dd">
+            <div class="box do"><div class="h">✓ Faça</div>
+              <p>Mantenha o colchete no [IA], sempre laranja.</p>
+              <p>Dê respiro: margem mínima de uma letra "E" ao redor.</p>
+              <p>Use sobre dobra escura ou clara em alto contraste.</p>
+            </div>
+            <div class="box dont"><div class="h">✕ Não faça</div>
+              <p>Não recolora, distorça ou incline o lockup.</p>
+              <p>Não remova o colchete nem troque a fonte.</p>
+              <p>Não aplique sobre foto sem scrim de contraste.</p>
+            </div>
+          </div>
+        </section>
+        <section id="r-logo">
+          <div class="sechead"><h2>Arquivos de logo</h2><span class="idx">[ 05 ]</span></div>
+          <p class="secnote">O lockup, o retrato e o mark da marca, prontos para uso.</p>
+          <div class="filegrid">
+            <a class="filecard" href="assets/icon-app-dark.png" target="_blank"><span class="prev"><img src="assets/icon-app-dark.png" alt="App icon escuro"></span><span class="ft"><span class="nm">App icon (escuro)</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="assets/icon-app-light.png" target="_blank"><span class="prev"><img src="assets/icon-app-light.png" alt="App icon claro"></span><span class="ft"><span class="nm">App icon (claro)</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="assets/icon-mark-cream.png" target="_blank"><span class="prev"><img src="assets/icon-mark-cream.png" alt="Mark creme"></span><span class="ft"><span class="nm">Mark (creme)</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="assets/icon-mark-dark.png" target="_blank"><span class="prev"><img src="assets/icon-mark-dark.png" alt="Mark escuro"></span><span class="ft"><span class="nm">Mark (escuro)</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="favicon.png" target="_blank"><span class="prev"><img src="favicon.png" alt="Favicon" style="max-width:56px;max-height:56px;border-radius:12px"></span><span class="ft"><span class="nm">Favicon</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="assets/rosa-portrait.png" target="_blank"><span class="prev"><img src="assets/rosa-portrait.png" alt="Retrato Rosa duotone" style="max-width:100%;max-height:120px;width:100%;object-fit:cover"></span><span class="ft"><span class="nm">Retrato Rosa (duotone)</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="assets/rosa-natural.png" target="_blank"><span class="prev"><img src="assets/rosa-natural.png" alt="Retrato Rosa natural" style="max-width:100%;max-height:120px;width:100%;object-fit:cover"></span><span class="ft"><span class="nm">Retrato Rosa (natural)</span><span class="mt">PNG ↗</span></span></a>
+            <a class="filecard" href="guidelines/brand-mark.html?v=5" target="_blank"><span class="prev lockup">Estrateg<span style="color:var(--brand)">[IA]</span></span><span class="ft"><span class="nm">Lockup [IA]</span><span class="mt">specimen ↗</span></span></a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var tabs = [].slice.call(document.querySelectorAll('.tab'));
+  var navsides = [].slice.call(document.querySelectorAll('.navside'));
+  var panels = [].slice.call(document.querySelectorAll('.panel'));
+
+  function setTab(name){
+    tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); });
+    navsides.forEach(function(n){ n.classList.toggle('active', n.dataset.tab===name); });
+    panels.forEach(function(p){ p.classList.toggle('active', p.dataset.tab===name); });
+    window.scrollTo(0,0);
+    spy();
+  }
+  tabs.forEach(function(t){ t.addEventListener('click', function(){ setTab(t.dataset.tab); }); });
+
+  document.querySelectorAll('.navlink[data-target]').forEach(function(l){
+    l.addEventListener('click', function(){
+      var el = document.getElementById(l.getAttribute('data-target'));
+      if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  function spy(){}
+</script>
+</body></html>

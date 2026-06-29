@@ -1,0 +1,23 @@
+<!-- @dsCard group="Components" viewport="760x300" subtitle="Solid, ghost, and text-link CTAs with magnetic hover" name="Button" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+html,body{scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
+body{margin:0;overflow:hidden;font-family:var(--font-body);background:var(--ink-800);padding:36px 44px;display:flex;flex-direction:column;gap:18px;align-items:flex-start}
+.row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;border:none;cursor:pointer;text-decoration:none;font-family:var(--font-display);border-radius:var(--radius-pill);transition:background .3s,box-shadow .3s,border-color .3s,transform .2s var(--ease-tilt)}
+.btn-solid{background:var(--brand);color:#fff;font-weight:700;font-size:16px;padding:18px 32px;box-shadow:var(--glow-brand)}
+.btn-solid:hover{background:var(--brand-hover);box-shadow:var(--glow-brand-hover);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--on-dark-soft);border:1px solid rgba(255,255,255,.24);font-weight:600;font-size:16px;padding:18px 28px}
+.btn-ghost:hover{border-color:var(--brand);background:rgba(230,59,22,.1)}
+.btn-link{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand-bright);gap:8px;padding:6px 0}
+.btn-link:hover{text-decoration:underline;text-underline-offset:6px;gap:14px}
+.lab{font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-subtle)}
+</style></head>
+<body>
+<span class="lab">Sólido · primário</span>
+<div class="row"><a class="btn btn-solid">Conhecer o canal <span style="font-size:18px">›</span></a></div>
+<span class="lab">Ghost · secundário</span>
+<div class="row"><a class="btn btn-ghost">Agendar uma conversa</a></div>
+<span class="lab">Link · terciário</span>
+<div class="row"><a class="btn btn-link">Ver skills prontas →</a></div>
+</body></html>

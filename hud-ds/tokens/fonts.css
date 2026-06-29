@@ -1,0 +1,5 @@
+/* Estrateg[IA] webfonts.
+   NOTE: fonts are loaded from Google Fonts (not self-hosted binaries).
+   Funnel Display = display/headings · Poppins = body/UI · JetBrains Mono = technical labels.
+   If you need offline/self-hosted binaries, ask Rosa to provide the .woff2 files. */
+@import url("https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap");

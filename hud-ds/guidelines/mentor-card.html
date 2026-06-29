@@ -1,0 +1,24 @@
+<!-- @dsCard group="Components" viewport="520x540" subtitle="The signature portrait card — orange duotone, name + role lockup" name="Mentor card" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+html,body{scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
+body{margin:0;overflow:hidden;font-family:var(--font-body);background:var(--ink-900);padding:50px;display:flex;justify-content:center;align-items:center}
+.card{position:relative;width:240px;aspect-ratio:3/4;border-radius:var(--radius-sm);overflow:hidden;border:1px solid rgba(255,255,255,.16);box-shadow:var(--shadow-card);background:var(--gradient-brand)}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.scrim{position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,6,5,.9) 2%,rgba(7,6,5,.15) 34%,transparent 56%)}
+.meta{position:absolute;left:14px;right:14px;bottom:10px}
+.name-row{display:flex;align-items:flex-end;justify-content:space-between;gap:6px}
+.name{font-family:var(--font-display);font-weight:800;font-size:30px;line-height:.86;letter-spacing:-.01em;text-transform:uppercase;color:#fff}
+.arrows{font-family:var(--font-mono);font-size:13px;color:var(--brand-bright)}
+.role{font-family:var(--font-mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#FFD9C9;margin-top:8px}
+</style></head>
+<body>
+<div class="card">
+  <img src="../assets/rosa-portrait.png" alt="Rosa Kethllyn">
+  <div class="scrim"></div>
+  <div class="meta">
+    <div class="name-row"><div class="name">Rosa<br>Kethllyn</div><span class="arrows">&gt;&gt;&gt;</span></div>
+    <div class="role">[ Sua mentora ]</div>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,29 @@
+/* ── Estrateg[IA] · Spacing & radius ─────────────────────────
+   Base-4 rhythm. Sections breathe with large clamp()-based vertical padding. */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+  --space-8: 48px;
+  --space-9: 64px;
+  --space-10: 80px;
+  --space-12: 120px;
+
+  /* Section padding (the generous "respiro") */
+  --section-pad-y: clamp(56px, 7vw, 110px);
+  --section-pad-x: 6vw;
+  --page-gutter: clamp(28px, 7vw, 120px);   /* hero / wide gutter */
+  --container-max: 1280px;
+  --container-narrow: 1040px;
+
+  /* Radius */
+  --radius-pill: 999px;
+  --radius-card: 18px;
+  --radius-card-lg: 22px;
+  --radius-sm: 14px;
+  --radius-xs: 12px;
+}

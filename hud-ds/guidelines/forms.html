@@ -1,0 +1,19 @@
+<!-- @dsCard group="Product" viewport="760x430" subtitle="Inputs, textarea e select no tema escuro" name="Forms" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../styles.css">
+<style>
+html,body{scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
+body{margin:0;overflow:hidden;font-family:var(--font-body);background:var(--ink-800);color:var(--on-dark-soft);padding:36px 40px;display:flex;flex-direction:column;gap:18px;max-width:520px}
+label{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--on-dark-subtle);margin-bottom:9px}
+.field{display:flex;flex-direction:column}
+input,textarea,select{font-family:var(--font-body);font-size:15px;color:var(--on-dark-soft);background:var(--ink-card);border:1px solid var(--line-on-dark);border-radius:var(--radius-xs);padding:14px 16px;outline:none;transition:border-color .2s,box-shadow .2s}
+input::placeholder,textarea::placeholder{color:var(--on-dark-subtle)}
+input:focus,textarea:focus,select:focus{border-color:var(--brand);box-shadow:0 0 0 3px rgba(230,59,22,.18)}
+textarea{resize:none;min-height:84px}
+.btn{align-self:flex-start;margin-top:4px;border:none;cursor:pointer;background:var(--brand);color:#fff;font-family:var(--font-display);font-weight:700;font-size:15px;padding:15px 28px;border-radius:var(--radius-pill);box-shadow:var(--glow-brand)}
+</style></head>
+<body>
+<div class="field"><label>Nome</label><input placeholder="Como podemos te chamar?"></div>
+<div class="field"><label>Tipo de negócio</label><select><option>Clínica</option><option>Hospital</option><option>Laboratório</option><option>Consultório</option><option>Rede de saúde</option></select></div>
+<div class="field"><label>Mensagem</label><textarea placeholder="Conte rápido o seu maior gargalo no operacional."></textarea></div>
+<button class="btn">Agendar conversa ›</button>
+</body></html>

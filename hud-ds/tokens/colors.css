@@ -1,0 +1,60 @@
+/* ── Estrateg[IA] · Color system ─────────────────────────────
+   Brand is hot orange-red on near-black, with warm cream light folds.
+   The site alternates strict black / white "dobras". */
+:root {
+  /* Brand */
+  --brand: #E63B16;          /* primary orange-red — CTAs, accents, [IA] */
+  --brand-bright: #FF6A3D;   /* lighter accent — on-dark highlights, links */
+  --brand-hover: #FF5A2C;    /* hover state for solid brand fills */
+  --brand-deep: #9C2A0E;     /* deep tone — gradients */
+  --brand-ember: #3A1206;    /* darkest ember — gradient tails */
+
+  /* Dark surfaces (the black folds) */
+  --ink-900: #070605;        /* hero black / video backdrop */
+  --ink-800: #0B0A09;        /* base dark section */
+  --ink-700: #0E0C0B;        /* alternate dark section */
+  --ink-card: #141210;       /* card on dark */
+  --ink-card-2: #15110E;     /* deeper card on dark */
+
+  /* Light surfaces (the white folds) */
+  --paper: #F4F2EF;          /* cream — primary light fold */
+  --paper-warm: #EFECE7;     /* warm white — alt light fold */
+  --paper-card: #FFFFFF;     /* card on light */
+  --paper-tint: #FFEDE6;     /* orange-tinted hover on light */
+
+  /* Text on dark */
+  --on-dark: #F4F1EC;        /* primary heading on dark */
+  --on-dark-soft: #F2F0EC;   /* primary body on dark */
+  --on-dark-muted: #B7B1A9;  /* secondary on dark */
+  --on-dark-subtle: #8A847C; /* tertiary / mono labels on dark */
+  --on-dark-quote: #C9C2BA;  /* quotes / soft copy on dark */
+
+  /* Text on light */
+  --on-light: #14110F;       /* primary heading/body on light */
+  --on-light-body: #4A443E;  /* body copy on light */
+  --on-light-muted: #6E6760; /* secondary on light */
+  --on-light-subtle: #9A938B;/* tertiary / mono labels on light */
+
+  /* Hairlines */
+  --line-on-dark: rgba(255,255,255,.10);
+  --line-on-dark-soft: rgba(255,255,255,.07);
+  --line-on-light: rgba(20,17,15,.12);
+  --line-on-light-soft: rgba(20,17,15,.08);
+
+  /* Functional / semantic */
+  --success: #1F8A5B;
+  --warning: #E0A33A;
+  --danger:  #D7382B;
+  --info:    #2A6FDB;
+  --purple:  #7A4DD0;
+
+  /* Semantic aliases */
+  --bg: var(--ink-800);
+  --surface: var(--ink-card);
+  --text: var(--on-dark-soft);
+  --text-muted: var(--on-dark-muted);
+  --accent: var(--brand);
+  --accent-on-dark: var(--brand-bright);
+  --selection-bg: var(--brand);
+  --selection-fg: #ffffff;
+}
