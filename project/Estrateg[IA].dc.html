@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  /* Manifesto underline-on-hover (hand-drawn feel) */
+  h3.scia-uline{position:relative;display:inline-block}
+  h3.scia-uline::after{content:"";position:absolute;left:-2%;right:-2%;bottom:-6px;height:7px;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 7' preserveAspectRatio='none'><path d='M2 5 C 40 1, 80 6, 120 2 S 180 5, 198 4' fill='none' stroke='%23E63B16' stroke-width='2.6' stroke-linecap='round'/></svg>") no-repeat center / 100% 100%;transform:scaleX(0);transform-origin:left center;transition:transform .5s cubic-bezier(.16,1,.3,1);pointer-events:none}
+  /* Manifesto title underline (clean line) + letter scramble on hover */
+  h3.scia-uline{position:relative;display:inline-block;padding-bottom:4px;background-image:linear-gradient(#E63B16,#E63B16);background-repeat:no-repeat;background-size:0% 2px;background-position:left bottom;transition:background-size .4s cubic-bezier(.16,1,.3,1)}
+  div.scia-underline-on h3.scia-uline{background-size:100% 2px}
+  h3.scia-uline .scia-sym{font-family:inherit;font-weight:inherit;display:inline-block}
+  /* Hero glitch on hover */
+  .scia-glitch{position:relative;display:inline-block}
+  .scia-glitch::before,.scia-glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;pointer-events:none;opacity:0;background:transparent}
+  .scia-glitch::before{color:#FF6A3D;mix-blend-mode:screen;clip-path:inset(0 0 0 0);transform:translate(0,0)}
+  .scia-glitch::after{color:#E63B16;mix-blend-mode:screen;clip-path:inset(0 0 0 0);transform:translate(0,0)}
+  .scia-glitch:hover::before{animation:scia-glitch-r 1.1s steps(1) infinite}
+  .scia-glitch:hover::after{animation:scia-glitch-c 1.1s steps(1) infinite}
+  @keyframes scia-glitch-r{
+    0%{opacity:0;transform:translate(0,0);clip-path:inset(40% 0 55% 0)}
+    10%{opacity:1;transform:translate(-6px,0);clip-path:inset(40% 0 55% 0)}
+    20%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    30%{opacity:1;transform:translate(5px,0);clip-path:inset(70% 0 12% 0)}
+    45%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    55%{opacity:1;transform:translate(-4px,0);clip-path:inset(20% 0 65% 0)}
+    70%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    80%{opacity:1;transform:translate(3px,0);clip-path:inset(55% 0 30% 0)}
+    100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+  }
+  @keyframes scia-glitch-c{
+    0%{opacity:0;transform:translate(0,0);clip-path:inset(60% 0 30% 0)}
+    15%{opacity:1;transform:translate(4px,0);clip-path:inset(60% 0 30% 0)}
+    25%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    35%{opacity:1;transform:translate(-5px,0);clip-path:inset(15% 0 75% 0)}
+    50%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    60%{opacity:1;transform:translate(6px,0);clip-path:inset(80% 0 8% 0)}
+    75%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    88%{opacity:1;transform:translate(-3px,0);clip-path:inset(35% 0 50% 0)}
+    100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+  }
+  /* Ghost button: orange border + soft orange glow + lift on hover */
+  .scia-btn-ghost{transition:border-color .35s ease, background .35s ease, box-shadow .4s ease, color .3s ease, transform .35s cubic-bezier(.16,1,.3,1)!important}
+  .scia-btn-ghost:hover{border-color:#E63B16!important;background:rgba(230,59,22,.10)!important;color:#F2F0EC!important;box-shadow:0 0 0 1px rgba(230,59,22,.35),0 10px 32px -6px rgba(230,59,22,.55),inset 0 0 24px -8px rgba(230,59,22,.5)!important;transform:translateY(-3px)!important}
+  /* Text-link underline (clean line) */
+  .scia-link{position:relative;display:inline-block;padding-bottom:3px;background-image:linear-gradient(#E63B16,#E63B16);background-repeat:no-repeat;background-size:0% 2px;background-position:left bottom;transition:background-size .4s cubic-bezier(.16,1,.3,1),color .25s,gap .25s}
+  .scia-link:hover{color:#FF6A3D!important;gap:14px;background-size:100% 2px}
+  /* COMO FUNCIONA rows: hacker canvas + bracket/underline accents */
+  a.scia-row{position:relative;overflow:hidden}
+  a.scia-row canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s ease;pointer-events:none;z-index:0}
+  a.scia-row:hover canvas{opacity:.55}
+  a.scia-row > *{position:relative;z-index:1}
+  /* FEATURES cards: hacker canvas on hover */
+  .scia-card{overflow:hidden}
+  .scia-card canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .4s ease;pointer-events:none;z-index:0}
+  .scia-card:hover canvas{opacity:.35}
+  div.scia-card:hover div.scia-card-num{color:#E63B16!important}
+  /* EU MONTO PRA VOCÊ - accordion */
+  .scia-accordion .scia-acc-item:hover{background:rgba(230,59,22,.03)}
+  .scia-accordion .scia-acc-item:hover .scia-acc-bar{transform:scaleY(1)}
+  .scia-accordion .scia-acc-item:hover button{padding-left:36px}
+  .scia-accordion .scia-acc-item.scia-acc-open{background:rgba(230,59,22,.04)}
+  .scia-accordion .scia-acc-item.scia-acc-open .scia-acc-bar{transform:scaleY(1)}
+  .scia-accordion .scia-acc-item.scia-acc-open .scia-acc-icon{transform:rotate(180deg);background:#E63B16;color:#fff}
+  .scia-accordion .scia-acc-item.scia-acc-open button{padding-left:36px}
+  .scia-accordion .scia-acc-content{will-change:max-height}
+  .scia-bracket{color:#E63B16;font-family:'JetBrains Mono',monospace;font-weight:500;display:inline;opacity:0;overflow:hidden;max-width:0;transition:max-width .35s cubic-bezier(.16,1,.3,1),opacity .25s,font-size .35s ease;font-size:.9em;vertical-align:baseline;line-height:1}
+  .scia-acc{background-image:linear-gradient(#E63B16,#E63B16);background-repeat:no-repeat;background-size:0% 1.5px;background-position:0 100%;padding-bottom:1px;transition:background-size .4s cubic-bezier(.16,1,.3,1)}
+  a.scia-row:hover .scia-acc{background-size:100% 1.5px}
+  a.scia-row:hover .scia-bracket{max-width:1ch;opacity:1}
+  /* Clawd walking along the journey timeline */
+  .scia-clawd{position:absolute;top:-30px;left:0;width:80px;height:62px;pointer-events:none;z-index:5;transform:translate(0,-50%);transition:filter .3s;opacity:1;filter:drop-shadow(0 0 8px rgba(230,59,22,.4))}
+  .scia-clawd.scia-clawd-walk{filter:drop-shadow(0 0 14px rgba(230,59,22,.7))}
+  .scia-clawd-legs .scia-leg{transform-origin:center top}
+  .scia-clawd-walk .scia-leg-1{animation:scia-walk-a .32s steps(2) infinite}
+  .scia-clawd-walk .scia-leg-2{animation:scia-walk-b .32s steps(2) infinite}
+  .scia-clawd-walk .scia-leg-3{animation:scia-walk-b .32s steps(2) infinite}
+  .scia-clawd-walk .scia-leg-4{animation:scia-walk-a .32s steps(2) infinite}
+  @keyframes scia-walk-a{
+    0%{transform:translateY(0) scaleY(1)}
+    50%{transform:translateY(2px) scaleY(.75)}
+    100%{transform:translateY(0) scaleY(1)}
+  }
+  @keyframes scia-walk-b{
+    0%{transform:translateY(2px) scaleY(.75)}
+    50%{transform:translateY(0) scaleY(1)}
+    100%{transform:translateY(2px) scaleY(.75)}
+  }
+  .scia-clawd-typing{position:absolute;top:-46px;left:0;width:96px;height:78px;pointer-events:none;z-index:5;transform:translate(0,-50%);display:none}
+  .scia-clawd-typing svg{animation:scia-typing-bob .25s steps(1) infinite}
+  @keyframes scia-typing-bob{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-1px)}
+    100%{transform:translateY(0)}
+  }
+  .scia-clawd-hide{display:none!important}
+  /* Floating mascot in PARA QUEM É */
+  .scia-mascot{animation:scia-mascot-float 4s ease-in-out infinite;cursor:pointer}
+  .scia-mascot .scia-mascot-symbol{opacity:0;transition:opacity .2s ease}
+  .scia-mascot.scia-mascot-hover .scia-mascot-eye{opacity:0;transition:opacity .2s ease}
+  .scia-mascot.scia-mascot-hover .scia-mascot-symbol{opacity:1!important}
+  @keyframes scia-mascot-float{
+    0%,100%{transform:translateY(0) rotate(-1deg)}
+    25%{transform:translateY(-10px) rotate(0.5deg)}
+    50%{transform:translateY(-4px) rotate(-0.5deg)}
+    75%{transform:translateY(-12px) rotate(1deg)}
+  }
+  @keyframes scia-mascot-glow{
+    0%,100%{opacity:.7;transform:scale(1)}
+    50%{opacity:1;transform:scale(1.08)}
+  }
+  .scia-mascot-eyes{animation:scia-eye-blink 4.5s steps(1) infinite;transform-origin:center}
+  .scia-mascot-eye{transform-box:fill-box;transform-origin:center;animation:scia-eye-blink 4.5s steps(1) infinite}
+  @keyframes scia-eye-blink{
+    0%,92%,100%{transform:scaleY(1)}
+    94%,98%{transform:scaleY(0.1)}
+  }
+  /* Manifesto paragraph: per-word glitch that follows the cursor */
+  .scia-gw{position:relative;display:inline-block;will-change:transform}
+  .scia-gw::before,.scia-gw::after{content:attr(data-t);position:absolute;top:0;left:0;width:100%;pointer-events:none;opacity:0;background:transparent;clip-path:inset(0 0 100% 0)}
+  .scia-gw::before{color:#FF6A3D;mix-blend-mode:multiply}
+  .scia-gw::after{color:#E63B16;mix-blend-mode:multiply}
+  .scia-gw.scia-gw-on::before{animation:scia-gw-a .6s steps(1)}
+  .scia-gw.scia-gw-on::after{animation:scia-gw-b .6s steps(1)}
+  @keyframes scia-gw-a{
+    0%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    10%{opacity:.9;transform:translate(-4px,0);clip-path:inset(35% 0 50% 0)}
+    25%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    40%{opacity:.9;transform:translate(3px,0);clip-path:inset(70% 0 12% 0)}
+    55%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    70%{opacity:.9;transform:translate(-2px,0);clip-path:inset(15% 0 75% 0)}
+    85%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+  }
+  @keyframes scia-gw-b{
+    0%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    15%{opacity:.9;transform:translate(3px,0);clip-path:inset(55% 0 30% 0)}
+    30%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    45%{opacity:.9;transform:translate(-4px,0);clip-path:inset(20% 0 65% 0)}
+    60%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    75%{opacity:.9;transform:translate(2px,0);clip-path:inset(80% 0 8% 0)}
+    90%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+    100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 100% 0)}
+  }
+  /* Feature cards hover: blend with section background (#F4F2EF) */
+  .scia-card:hover{background:#F4F2EF!important}
+  .scia-card:hover .scia-card-num{color:#E63B16!important}
+  /* Highlighted plan card: pulsing glow + badge blink */
+  @keyframes scia-plan-pulse{
+    0%,100%{box-shadow:0 24px 70px rgba(230,59,22,.18),0 0 0 0 rgba(230,59,22,.55)}
+    50%{box-shadow:0 24px 70px rgba(230,59,22,.30),0 0 0 14px rgba(230,59,22,0)}
+  }
+  @keyframes scia-plan-border{
+    0%,100%{border-color:rgba(230,59,22,.55)}
+    50%{border-color:rgba(230,59,22,1)}
+  }
+  @keyframes scia-plan-glow{
+    0%,100%{opacity:.35;transform:scale(1)}
+    50%{opacity:.7;transform:scale(1.04)}
+  }
+  @keyframes scia-badge-blink{
+    0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(230,59,22,.7)}
+    50%{opacity:.85;box-shadow:0 0 0 10px rgba(230,59,22,0)}
+  }
+  .scia-plan-highlight{position:relative;animation:scia-plan-pulse 2.4s ease-in-out infinite,scia-plan-border 2.4s ease-in-out infinite}
+  .scia-plan-highlight::before{content:"";position:absolute;inset:-20px;border-radius:26px;background:radial-gradient(circle,rgba(230,59,22,.55),transparent 65%);filter:blur(18px);z-index:-1;animation:scia-plan-glow 2.4s ease-in-out infinite;pointer-events:none}
+  .scia-plan-highlight .scia-plan-badge{animation:scia-badge-blink 1.6s ease-in-out infinite}
+  /* About section highlight cards: zoom + follow mouse */
+  .scia-about-card:hover{border-color:rgba(230,59,22,.55)!important;box-shadow:0 18px 50px rgba(230,59,22,.4)}
+  .scia-about-card:hover > div:first-child{transform:scale(1.08);color:#FF6A3D!important}
+  /* Letter scramble: cada caractere é um span .scia-sym inline-block pra não quebrar o fluxo */
+  .scia-sym{display:inline-block;min-width:1px}
+  /* Scramble active state — letras brancas pra não perder legibilidade */
+  .scia-scramble-on .scia-sym{color:#EDE8E1}
+</style>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#0B0A09}
+  ::selection{background:#E63B16;color:#fff}
+  @keyframes scia-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes scia-pulse{0%,100%{opacity:.5}50%{opacity:.9}}
+  @keyframes scia-spin{to{transform:rotate(360deg)}}
+  @keyframes scia-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  @keyframes scia-blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+  @keyframes scia-modalin{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+  @keyframes scia-fadein{from{opacity:0}to{opacity:1}}
+  ::-webkit-scrollbar{height:8px;width:9px}
+  ::-webkit-scrollbar-track{background:transparent}
+  ::-webkit-scrollbar-thumb{background:#2a2723;border-radius:8px}
+  [data-drag]{scrollbar-width:none}
+  [data-drag]::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div ref="{{ root }}" style="position:relative;background:#0B0A09;color:#F2F0EC;font-family:'Poppins',sans-serif;overflow-x:hidden;min-height:100vh">
+
+  <div data-cursor-glow="1" style="position:fixed;left:0;top:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;background:radial-gradient(circle,rgba(230,59,22,.30),transparent 62%);pointer-events:none;mix-blend-mode:screen;z-index:1;will-change:transform"></div>
+
+  <!-- TOP TICKER -->
+  <div style="position:relative;z-index:6;overflow:hidden;border-bottom:1px solid rgba(255,255,255,.07);background:#0B0A09">
+    <div style="display:flex;width:max-content;animation:scia-marquee 38s linear infinite;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:#8A847C;padding:9px 0">
+      <span style="display:flex;gap:34px;padding-right:34px"><span>[ ESTRATÉG·IA ]</span><span style="color:#E63B16">IA aplicada à estratégia em saúde</span><span>·</span><span>Ensino grátis no YouTube</span><span>·</span><span>Agentes prontos de IA</span><span>·</span><span style="color:#E63B16">Serviço personalizado</span><span>·</span><span>Tire o gestor do operacional</span><span>·</span></span>
+      <span style="display:flex;gap:34px;padding-right:34px" aria-hidden="true"><span>[ ESTRATÉG·IA ]</span><span style="color:#E63B16">IA aplicada à estratégia em saúde</span><span>·</span><span>Ensino grátis no YouTube</span><span>·</span><span>Agentes prontos de IA</span><span>·</span><span style="color:#E63B16">Serviço personalizado</span><span>·</span><span>Tire o gestor do operacional</span><span>·</span></span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px 6vw;background:rgba(11,10,9,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.07)">
+    <a href="#topo" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:22px;letter-spacing:-.02em;color:#F2F0EC;text-decoration:none">Estrateg<span style="color:#E63B16">[IA]</span></a>
+    <div style="display:flex;align-items:center;gap:30px;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase">
+      <a href="#canal" style="color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">Canal</a>
+      <a href="#agentes" style="color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">Skills</a>
+      <a href="#servico" style="color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">Serviço</a>
+      <a href="#jornada" style="color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">Jornada</a>
+      <a href="#sobre" style="color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">Sobre</a>
+      <a href="#faq" style="color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px">FAQ</a>
+    </div>
+    <a href="#servico" data-magnetic="0.35" class="scia-btn-ghost" style="display:inline-flex;align-items:center;gap:9px;padding:12px 22px;background:transparent;color:#F2F0EC;border:1px solid rgba(255,255,255,.22);border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:600;font-size:14px;text-decoration:none;will-change:transform"><svg width="15" height="15" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Agendar conversa</a>
+  </nav>
+
+  <!-- HERO -->
+  <header id="topo" style="position:relative;z-index:5;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:clamp(100px,14vh,170px) clamp(28px,7vw,120px) clamp(140px,18vh,200px);overflow:hidden;background:#070605">
+    <canvas ref="{{ hackerCanvas }}" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:auto"></canvas>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 95% at 50% 42%,rgba(7,6,5,.18),rgba(7,6,5,.55) 62%,rgba(7,6,5,.85)),linear-gradient(180deg,rgba(7,6,5,.5),transparent 20%,transparent 64%,rgba(11,10,9,.96))"></div>
+    <div style="position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.5;background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 4px)"></div>
+
+    <div style="position:relative;z-index:3;max-width:1080px;width:100%;display:flex;flex-direction:column;align-items:center">
+      <div data-reveal="1" style="display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#FF6A3D;border:1px solid rgba(230,59,22,.4);border-radius:999px;padding:9px 18px;margin-bottom:38px;background:rgba(11,10,9,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><span style="width:7px;height:7px;border-radius:50%;background:#FF6A3D;animation:scia-pulse 1.8s infinite"></span>IA aplicada · gestão em saúde</div>
+      <h1 data-reveal="1" data-reveal-delay="60" class="scia-glitch" data-text="Estrateg[IA]" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(56px,12vw,168px);line-height:.84;letter-spacing:-.04em;margin:0;color:#F4F1EC;text-transform:uppercase;text-shadow:0 14px 60px rgba(0,0,0,.6);opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.16,1,.3,1),transform 1s cubic-bezier(.16,1,.3,1);position:relative;display:inline-block">Estrateg<span style="color:#FF6A3D">[IA]</span></h1>
+      <p data-reveal="1" data-reveal-delay="150" data-scramble style="font-family:'Funnel Display',sans-serif;font-weight:600;max-width:640px;font-size:clamp(19px,2.2vw,29px);line-height:1.25;letter-spacing:-.01em;color:#EDE8E1;margin:40px 0 0;text-shadow:0 6px 30px rgba(0,0,0,.6);opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">A IA tira o gestor da saúde do <span style="color:#FF6A3D">operacional</span> e devolve ele pra estratégia.</p>
+      <div data-reveal="1" data-reveal-delay="240" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px;margin-top:52px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <a href="#canal" data-magnetic="0.3" style="display:inline-flex;align-items:center;gap:11px;padding:18px 32px;background:#E63B16;color:#fff;border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 10px 38px rgba(230,59,22,.5);transition:background .3s,box-shadow .3s;will-change:transform" style-hover="background:#FF5A2C;box-shadow:0 14px 48px rgba(230,59,22,.65)"><svg width="22" height="16" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><rect width="28" height="20" rx="5" fill="#fff"/><path d="M11.5 6L18 10L11.5 14V6Z" fill="#E63B16"/></svg>Conhecer o canal <span style="font-size:18px">›</span></a>
+        <a href="#servico" data-magnetic="0.3" class="scia-btn-ghost" style="display:inline-flex;align-items:center;gap:9px;padding:18px 28px;background:rgba(11,10,9,.4);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#F2F0EC;border:1px solid rgba(255,255,255,.28);border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:600;font-size:16px;text-decoration:none;will-change:transform"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Agendar uma conversa</a>
+        <a href="#agentes" class="scia-link" style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#FF6A3D;text-decoration:none">Ver skills prontas →</a>
+      </div>
+    </div>
+
+    <div style="position:absolute;z-index:3;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#9A938B">role para baixo<span style="width:1px;height:30px;background:linear-gradient(#FF6A3D,transparent);animation:scia-pulse 1.6s infinite"></span></div>
+
+    <sc-if value="{{ showPortrait }}" hint-placeholder-val="{{ true }}">
+    <div data-reveal="1" data-reveal-delay="320" data-tilt="22" data-tilt-intensity="1.3" onClick="{{ openBio }}" role="button" tabindex="0" title="Conhecer a Rosa" style="position:absolute;z-index:4;right:clamp(16px,3vw,40px);bottom:clamp(40px,7vh,72px);width:clamp(138px,14vw,196px);perspective:1200px;cursor:pointer;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+      <div data-tilt-inner style="position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.16);box-shadow:0 22px 50px rgba(0,0,0,.55);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease;transform-style:preserve-3d;aspect-ratio:3/4;background:#15110E;will-change:transform" style-hover="box-shadow:0 42px 96px rgba(0,0,0,.7),0 0 0 1px rgba(255,106,61,.55),0 18px 60px rgba(230,59,22,.4)">
+        <img src="rosa-card.png" alt="Rosa Kethllyn" draggable="false" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;transition:transform .35s cubic-bezier(.2,.8,.2,1);will-change:transform" />
+        <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(7,6,5,.9) 2%,rgba(7,6,5,.15) 34%,transparent 56%)"></div>
+        <div data-tilt-sheen style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay"></div>
+        <div style="position:absolute;left:14px;right:14px;bottom:10px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:6px"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(21px,2.3vw,30px);line-height:.86;letter-spacing:-.01em;text-transform:uppercase;color:#fff">Rosa<br>Kethllyn</div><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#FF6A3D;letter-spacing:.05em">&gt;&gt;&gt;</span></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#FFD9C9;margin-top:8px">[ Sua mentora ]</div>
+        </div>
+        <div style="position:absolute;top:12px;right:12px;width:24px;height:24px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:rgba(11,10,9,.45);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;color:#fff">+</div>
+      </div>
+    </div>
+    </sc-if>
+  </header>
+
+  <!-- BIO MODAL -->
+  <sc-if value="{{ bioOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeBio }}" style="position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(5,4,4,.74);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:scia-fadein .35s ease both;pointer-events:auto">
+    <div data-tilt="22" data-tilt-intensity="1.4" data-tilt-inner onClick="{{ stop }}" style="position:relative;width:100%;max-width:760px;max-height:88vh;overflow:visible;display:grid;grid-template-columns:300px 1fr;gap:0;background:#0D0B0A;border:1px solid rgba(255,255,255,.12);border-radius:20px;box-shadow:0 50px 130px rgba(0,0,0,.7);animation:scia-modalin .5s cubic-bezier(.16,1,.3,1) both;will-change:transform;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .4s;transform-style:preserve-3d;perspective:1800px;pointer-events:auto">
+      <div style="position:relative;min-height:340px;background:#15110E;overflow:hidden;border-right:1px solid rgba(255,255,255,.08);border-radius:20px 0 0 20px">
+        <img src="rosa-card.png" alt="Rosa Kethllyn" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;transition:transform .5s cubic-bezier(.2,.8,.2,1);will-change:transform" />
+      </div>
+      <div style="position:relative;padding:clamp(26px,3vw,40px)">
+        <button onClick="{{ closeBio }}" aria-label="Fechar" style="position:absolute;top:20px;right:20px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:transparent;color:#F2F0EC;font-size:18px;line-height:1;cursor:pointer;transition:border-color .3s,background .3s" style-hover="border-color:#E63B16;background:rgba(230,59,22,.14)">✕</button>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#FF6A3D;margin-bottom:14px">[ Sua mentora ]</div>
+        <h3 style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(30px,4vw,46px);line-height:.95;letter-spacing:-.02em;margin:0 0 22px;text-transform:uppercase;color:#F4F1EC">Rosa<br>Kethllyn</h3>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;color:#C2BBB2;margin:0 0 16px">Criei o Estrateg<span style="color:#FF6A3D">[IA]</span> porque vi de perto um problema: gestores da saúde presos no operacional, sem tempo de pensar em estratégia e sem tempo de virar especialistas em IA.</p>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;color:#C2BBB2;margin:0 0 16px">Uso inteligência artificial aplicada à estratégia pra construir agentes, frameworks e ferramentas que tiram o gestor do operacional e devolvem ele pro que importa: decidir, crescer e cuidar melhor dos pacientes.</p>
+        <p style="font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.75;color:#C2BBB2;margin:0 0 26px">Ensino o básico de graça no YouTube, ofereço skills da Claude prontas pra usar hoje e crio agentes personalizados pra quem prefere que eu monte tudo.</p>
+        <div style="border-top:1px solid rgba(255,255,255,.12);padding-top:22px"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(22px,2.6vw,30px);line-height:1;color:#F4F1EC;margin-bottom:8px">A IA trabalha pra você.</div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#8A847C">Não o contrário.</div></div>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:26px">
+          <a href="#canal" onClick="{{ closeBio }}" style="display:inline-flex;align-items:center;gap:9px;padding:14px 24px;background:#E63B16;color:#fff;border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:14px;text-decoration:none;transition:background .3s" style-hover="background:#FF5A2C"><svg width="18" height="13" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><rect width="28" height="20" rx="5" fill="#fff"/><path d="M11.5 6L18 10L11.5 14V6Z" fill="#E63B16"/></svg>Conhecer o canal ›</a>
+          <a href="#servico" onClick="{{ closeBio }}" class="scia-btn-ghost" style="display:inline-flex;align-items:center;gap:9px;padding:14px 22px;background:transparent;color:#F2F0EC;border:1px solid rgba(255,255,255,.24);border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:600;font-size:14px;text-decoration:none"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Agendar conversa</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- MARQUEE SLIM -->
+  <div style="position:relative;z-index:4;overflow:hidden;border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:11px 0;background:#0E0C0B">
+    <div style="display:flex;width:max-content;animation:scia-marquee 34s linear infinite;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#6E6760">
+      <span style="display:flex;gap:26px;padding-right:26px;align-items:center"><span>Agentes de IA</span><span style="color:#E63B16">✦</span><span>Frameworks</span><span style="color:#E63B16">✦</span><span>Gestão em saúde</span><span style="color:#E63B16">✦</span><span>Estratégia</span><span style="color:#E63B16">✦</span><span>Automação</span><span style="color:#E63B16">✦</span><span>SaaS</span><span style="color:#E63B16">✦</span><span>Skills da Claude</span><span style="color:#E63B16">✦</span></span>
+      <span style="display:flex;gap:26px;padding-right:26px;align-items:center" aria-hidden="true"><span>Agentes de IA</span><span style="color:#E63B16">✦</span><span>Frameworks</span><span style="color:#E63B16">✦</span><span>Gestão em saúde</span><span style="color:#E63B16">✦</span><span>Estratégia</span><span style="color:#E63B16">✦</span><span>Automação</span><span style="color:#E63B16">✦</span><span>SaaS</span><span style="color:#E63B16">✦</span><span>Skills da Claude</span><span style="color:#E63B16">✦</span></span>
+    </div>
+  </div>
+
+  <!-- MANIFESTO -->
+  <section style="position:relative;z-index:4;padding:clamp(56px,7vw,100px) 6vw;background:#F4F2EF;color:#14110F">
+    <div style="max-width:1280px;margin:0 auto">
+      <div data-reveal="1" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:34px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">[ POR QUE EXISTE ]</div>
+      <p data-reveal="1" data-reveal-delay="80" style="max-width:1000px;font-family:'Funnel Display',sans-serif;font-weight:600;font-size:clamp(24px,3.4vw,44px);line-height:1.18;letter-spacing:-.01em;margin:0 0 56px;color:#14110F;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><span class="scia-gw" data-t="O">O</span> <span class="scia-gw" data-t="gestor">gestor</span> <span class="scia-gw" data-t="da">da</span> <span class="scia-gw" data-t="saúde">saúde</span> <span class="scia-gw" data-t="está">está</span> <span class="scia-gw" data-t="preso">preso</span> <span class="scia-gw" data-t="no">no</span> <span class="scia-gw" data-t="operacional,">operacional,</span> <span class="scia-gw" data-t="sem">sem</span> <span class="scia-gw" data-t="tempo">tempo</span> <span class="scia-gw" data-t="de">de</span> <span class="scia-gw" data-t="virar">virar</span> <span class="scia-gw" data-t="especialista">especialista</span> <span class="scia-gw" data-t="em">em</span> <span class="scia-gw" data-t="IA.">IA.</span> <span class="scia-gw" data-t="Eu">Eu</span> <span class="scia-gw" data-t="construo">construo</span> <span class="scia-gw" data-t="o">o</span> <span class="scia-gw" data-t="atalho:">atalho:</span> <span class="scia-gw" style="color:#E63B16" data-t="ensino">ensino</span> <span class="scia-gw" style="color:#E63B16" data-t="o">o</span> <span class="scia-gw" style="color:#E63B16" data-t="caminho">caminho</span> <span class="scia-gw" style="color:#E63B16" data-t="e">e</span> <span class="scia-gw" style="color:#E63B16" data-t="entrego">entrego</span> <span class="scia-gw" style="color:#E63B16" data-t="as">as</span> <span class="scia-gw" style="color:#E63B16" data-t="ferramentas">ferramentas</span> <span class="scia-gw" style="color:#E63B16" data-t="prontas.">prontas.</span></p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px)">
+        <div data-reveal="1" data-reveal-delay="0" style="border-top:1px solid rgba(230,59,22,.5);padding-top:22px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:#9A938B;margin-bottom:14px">[ 01 ]</div><h3 class="scia-uline" data-orig="Tempo de volta" style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(21px,2.4vw,28px);line-height:1.1;margin:0 0 10px;color:#14110F;display:inline-block;position:relative"><span class="scia-sym" data-sym="3">T</span><span data-sym="0">e</span><span data-sym="0">m</span><span class="scia-sym" data-sym="2">p</span><span data-sym="0">o</span> <span data-sym="0">d</span><span data-sym="0">e</span> <span class="scia-sym" data-sym="1">v</span><span data-sym="0">o</span><span class="scia-sym" data-sym="2">l</span><span data-sym="0">t</span><span class="scia-sym" data-sym="1">a</span></h3><p style="font-size:15px;line-height:1.6;color:#6E6760;margin:0">A IA assume o repetitivo pra você voltar a decidir e crescer.</p></div>
+        <div data-reveal="1" data-reveal-delay="110" style="border-top:1px solid rgba(230,59,22,.5);padding-top:22px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:#9A938B;margin-bottom:14px">[ 02 ]</div><h3 class="scia-uline" data-orig="Clareza estratégica" style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(21px,2.4vw,28px);line-height:1.1;margin:0 0 10px;color:#14110F;display:inline-block;position:relative"><span class="scia-sym" data-sym="3">C</span><span data-sym="0">l</span><span class="scia-sym" data-sym="2">a</span><span data-sym="0">r</span><span class="scia-sym" data-sym="1">e</span><span data-sym="0">z</span><span class="scia-sym" data-sym="2">a</span> <span class="scia-sym" data-sym="3">e</span><span data-sym="0">s</span><span class="scia-sym" data-sym="2">t</span><span data-sym="0">r</span><span class="scia-sym" data-sym="1">a</span><span data-sym="0">t</span><span class="scia-sym" data-sym="2">é</span><span data-sym="0">g</span><span class="scia-sym" data-sym="1">i</span><span data-sym="0">c</span><span class="scia-sym" data-sym="3">a</span></h3><p style="font-size:15px;line-height:1.6;color:#6E6760;margin:0">Frameworks que tiram a decisão do achismo e colocam no dado.</p></div>
+        <div data-reveal="1" data-reveal-delay="220" style="border-top:1px solid rgba(230,59,22,.5);padding-top:22px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;color:#9A938B;margin-bottom:14px">[ 03 ]</div><h3 class="scia-uline" data-orig="Ferramentas prontas" style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(21px,2.4vw,28px);line-height:1.1;margin:0 0 10px;color:#14110F;display:inline-block;position:relative"><span class="scia-sym" data-sym="2">F</span><span data-sym="0">e</span><span class="scia-sym" data-sym="3">r</span><span data-sym="0">r</span><span class="scia-sym" data-sym="1">a</span><span data-sym="0">m</span><span class="scia-sym" data-sym="2">e</span><span data-sym="0">n</span><span class="scia-sym" data-sym="3">t</span><span data-sym="0">a</span><span data-sym="0">s</span> <span class="scia-sym" data-sym="1">p</span><span data-sym="0">r</span><span class="scia-sym" data-sym="2">o</span><span data-sym="0">n</span><span class="scia-sym" data-sym="3">t</span><span data-sym="0">a</span><span data-sym="0">s</span></h3><p style="font-size:15px;line-height:1.6;color:#6E6760;margin:0">Agentes e skills da Claude que você usa hoje, sem montar do zero.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE PILLARS -->
+  <section id="canal" style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#0E0C0B;border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div data-reveal="1" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:48px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:16px">[ COMO FUNCIONA ]</div><h2 class="scia-glitch" data-text="Três camadas, um ecossistema." style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(34px,5vw,64px);line-height:1;letter-spacing:-.02em;margin:0;position:relative;display:inline-block">Três camadas,<br>um ecossistema.</h2></div>
+        <p style="max-width:380px;font-size:15px;line-height:1.6;color:#8A847C;margin:0">Eu ensino o básico no canal → você vê que funciona → escolhe fazer sozinho com os agentes prontos, ou pede pra eu montar pra você.</p>
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,.1)">
+        <a href="#canal" data-reveal="1" class="scia-row" style="display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:clamp(16px,3vw,48px);padding:34px 24px;border-bottom:1px solid rgba(255,255,255,.1);text-decoration:none;color:#F2F0EC;transition:background .4s,padding .4s,color .35s;opacity:0;transform:translateY(28px)" style-hover="background:linear-gradient(90deg,rgba(230,59,22,.16),rgba(230,59,22,.02));padding-left:40px;color:#FF5A2C">
+          <canvas></canvas>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;color:#8A847C">[ 01 ]</span>
+          <span><span style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8A847C;margin-bottom:8px">Canal · YouTube · grátis</span><span style="display:block;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(24px,3vw,38px);line-height:1.05;margin-bottom:8px">Aprenda <span class="scia-bracket">[</span><span class="scia-acc">IA</span><span class="scia-bracket">]</span> de graça</span><span style="display:block;font-size:15px;color:#B7B1A9;max-width:560px">O básico de IA, como criar um SaaS do zero e como configurar agentes. Aulas novas toda semana, é só se inscrever.</span></span>
+          <span style="font-size:30px;color:#E63B16">→</span>
+        </a>
+        <a href="#agentes" data-reveal="1" data-reveal-delay="90" class="scia-row" style="display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:clamp(16px,3vw,48px);padding:34px 24px;border-bottom:1px solid rgba(255,255,255,.1);text-decoration:none;color:#F2F0EC;transition:background .4s,padding .4s,color .35s;opacity:0;transform:translateY(28px)" style-hover="background:linear-gradient(90deg,rgba(230,59,22,.16),rgba(230,59,22,.02));padding-left:40px;color:#FF5A2C">
+          <canvas></canvas>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;color:#8A847C">[ 02 ]</span>
+          <span><span style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8A847C;margin-bottom:8px">Produto · self-serve</span><span style="display:block;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(24px,3vw,38px);line-height:1.05;margin-bottom:8px"><span class="scia-bracket">[</span><span class="scia-acc">Skills</span><span class="scia-bracket">]</span> prontas</span><span style="display:block;font-size:15px;color:#B7B1A9;max-width:560px">Skills da Claude prontas pro dia a dia da sua clínica, consultório ou laboratório. Você instala e usa hoje.</span></span>
+          <span style="font-size:30px;color:#E63B16">→</span>
+        </a>
+        <a href="#servico" data-reveal="1" data-reveal-delay="180" class="scia-row" style="display:grid;grid-template-columns:80px 1fr auto;align-items:center;gap:clamp(16px,3vw,48px);padding:34px 24px;border-bottom:1px solid rgba(255,255,255,.1);text-decoration:none;color:#F2F0EC;transition:background .4s,padding .4s,color .35s;opacity:0;transform:translateY(28px)" style-hover="background:linear-gradient(90deg,rgba(230,59,22,.16),rgba(230,59,22,.02));padding-left:40px;color:#FF5A2C">
+          <canvas></canvas>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;letter-spacing:.1em;color:#8A847C">[ 03 ]</span>
+          <span><span style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8A847C;margin-bottom:8px">Serviço · sob medida</span><span style="display:block;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(24px,3vw,38px);line-height:1.05;margin-bottom:8px">Eu monto pra <span class="scia-bracket">[</span><span class="scia-acc">você</span><span class="scia-bracket">]</span></span><span style="display:block;font-size:15px;color:#B7B1A9;max-width:560px">Crio agentes personalizados pro seu negócio de saúde, do diagnóstico ao deploy, com suporte.</span></span>
+          <span style="font-size:30px;color:#E63B16">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES / O QUE APRENDE -->
+  <section style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#F4F2EF;color:#14110F">
+    <div style="max-width:1280px;margin:0 auto">
+      <div data-reveal="1" style="text-align:center;margin-bottom:56px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:18px">[ VEJA O QUE VAI APRENDER ]</div>
+        <h2 class="scia-glitch" data-text="No canal, do zero ao avançado" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(32px,5vw,60px);line-height:1;letter-spacing:-.02em;margin:0;color:#14110F;position:relative;display:inline-block">No canal, do zero ao avançado</h2><p style="max-width:560px;margin:18px auto 0;font-size:15px;line-height:1.6;color:#6E6760">As aulas sobem uma a uma. Inscreva-se e acompanhe, é tudo de graça.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid rgba(20,17,15,.12);border-radius:14px;overflow:hidden">
+        <div class="scia-card" data-reveal="1" data-reveal-delay="0" style="position:relative;padding:28px 22px;border-right:1px solid rgba(20,17,15,.12);background:#fff;transition:background .35s;opacity:0;transform:translateY(28px)" style-hover="background:#F4F2EF"><canvas></canvas><div style="position:relative;z-index:1"><div class="scia-card-num" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#9A938B;margin-bottom:60px;transition:color .3s">[ 01 ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:19px;line-height:1.15;margin:0;color:#14110F">Fundamentos de IA aplicada</h3></div></div>
+        <div class="scia-card" data-reveal="1" data-reveal-delay="70" style="position:relative;padding:28px 22px;border-right:1px solid rgba(20,17,15,.12);background:#fff;transition:background .35s;opacity:0;transform:translateY(28px)" style-hover="background:#F4F2EF"><canvas></canvas><div style="position:relative;z-index:1"><div class="scia-card-num" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#9A938B;margin-bottom:60px;transition:color .3s">[ 02 ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:19px;line-height:1.15;margin:0;color:#14110F">Criar um SaaS do zero</h3></div></div>
+        <div class="scia-card" data-reveal="1" data-reveal-delay="140" style="position:relative;padding:28px 22px;border-right:1px solid rgba(20,17,15,.12);background:#fff;transition:background .35s;opacity:0;transform:translateY(28px)" style-hover="background:#F4F2EF"><canvas></canvas><div style="position:relative;z-index:1"><div class="scia-card-num" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#9A938B;margin-bottom:60px;transition:color .3s">[ 03 ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:19px;line-height:1.15;margin:0;color:#14110F">Configurar e criar agentes</h3></div></div>
+        <div class="scia-card" data-reveal="1" data-reveal-delay="210" style="position:relative;padding:28px 22px;border-right:1px solid rgba(20,17,15,.12);background:#fff;transition:background .35s;opacity:0;transform:translateY(28px)" style-hover="background:#F4F2EF"><canvas></canvas><div style="position:relative;z-index:1"><div class="scia-card-num" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#9A938B;margin-bottom:60px;transition:color .3s">[ 04 ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:19px;line-height:1.15;margin:0;color:#14110F">Automatizar o operacional</h3></div></div>
+        <div class="scia-card" data-reveal="1" data-reveal-delay="280" style="position:relative;padding:28px 22px;background:#fff;transition:background .35s;opacity:0;transform:translateY(28px)" style-hover="background:#F4F2EF"><canvas></canvas><div style="position:relative;z-index:1"><div class="scia-card-num" style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;color:#9A938B;margin-bottom:60px;transition:color .3s">[ 05 ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:19px;line-height:1.15;margin:0;color:#14110F">Dashboards e relatórios com IA</h3></div></div>
+      </div>
+      <div data-reveal="1" style="text-align:center;margin-top:44px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><a href="#canal" data-magnetic="0.3" style="display:inline-flex;align-items:center;gap:10px;padding:17px 30px;background:#E63B16;color:#fff;border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 10px 34px rgba(230,59,22,.28);transition:background .3s;will-change:transform" style-hover="background:#FF5A2C"><svg width="20" height="14" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><rect width="28" height="20" rx="5" fill="#fff"/><path d="M11.5 6L18 10L11.5 14V6Z" fill="#E63B16"/></svg>Inscrever-se no canal ›</a></div>
+    </div>
+  </section>
+
+  <!-- DIVIDER LINE -->
+  <div style="position:relative;z-index:4;background:#F4F2EF;padding:0 6vw">
+    <div style="max-width:1280px;margin:0 auto;height:1px;background:rgba(20,17,15,.18)"></div>
+  </div>
+
+  <!-- PARA QUEM É -->
+  <section style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#F4F2EF;color:#14110F">
+    <div style="max-width:1280px;margin:0 auto">
+      <div data-reveal="1" style="display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,80px);align-items:center;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:18px">[ PARA QUEM É ]</div>
+          <h3 class="scia-glitch" data-text="VOCÊ PODE, SE QUISER." style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(28px,3.6vw,48px);line-height:1.05;letter-spacing:-.02em;margin:0 0 28px;color:#14110F;position:relative;display:inline-block">VOCÊ PODE, SE QUISER.</h3>
+          <div style="border-top:1px solid rgba(20,17,15,.18);padding-top:24px;margin-top:8px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9A938B;margin-bottom:22px">Sinais de que foi feito pra você:</div>
+            <div style="display:flex;flex-direction:column;gap:0">
+              <div style="display:flex;align-items:center;gap:18px;padding:18px 0;border-top:1px solid rgba(20,17,15,.12)">
+                <span style="width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:#14110F">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#14110F">Você faz tudo sozinho e o projeto não escala.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:18px;padding:18px 0;border-top:1px solid rgba(20,17,15,.12)">
+                <span style="width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:#14110F">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h2v2h-2zM18 14h2v2h-2zM14 18h2v2h-2zM18 18h2v2h-2z"/></svg>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#14110F">Você aprende IA aos pedaços e nada vira resultado.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:18px;padding:18px 0;border-top:1px solid rgba(20,17,15,.12)">
+                <span style="width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:#14110F">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#14110F">Você nunca abriu o terminal e só usa IA básica.</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:18px;padding:18px 0;border-top:1px solid rgba(20,17,15,.12);border-bottom:1px solid rgba(20,17,15,.12)">
+                <span style="width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;color:#14110F">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+                </span>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:15px;color:#14110F">Você paga IA todo mês e não usa nem 10% delas.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;position:relative">
+          <div style="position:relative;width:380px;height:380px;display:flex;align-items:center;justify-content:center">
+            <div style="position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(230,59,22,.14),transparent 65%);filter:blur(28px);animation:scia-mascot-glow 4s ease-in-out infinite"></div>
+            <div class="scia-mascot" style="position:relative;width:320px;height:240px;filter:drop-shadow(0 20px 40px rgba(230,59,22,.35))">
+              <svg viewBox="0 0 80 62" width="100%" height="100%" shape-rendering="crispEdges" style="image-rendering:pixelated">
+                <rect x="12" y="6" width="56" height="30" fill="#E97858"/>
+                <rect x="4" y="16" width="8" height="10" fill="#E97858"/>
+                <rect x="68" y="16" width="8" height="10" fill="#E97858"/>
+                <g>
+                  <rect class="scia-mascot-eye scia-mascot-eye-l" x="23" y="14" width="5" height="5" fill="#0B0A09"/>
+                  <rect class="scia-mascot-eye scia-mascot-eye-r" x="52" y="14" width="5" height="5" fill="#0B0A09"/>
+                  <text class="scia-mascot-symbol scia-mascot-symbol-l" x="20" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0A09" style="opacity:0;transition:opacity .25s;pointer-events:none">&gt;</text>
+                  <text class="scia-mascot-symbol scia-mascot-symbol-r" x="56" y="20" font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" fill="#0B0A09" style="opacity:0;transition:opacity .25s;pointer-events:none">&lt;</text>
+                </g>
+                <rect x="12" y="36" width="6" height="10" fill="#E97858"/>
+                <rect x="26" y="36" width="6" height="10" fill="#E97858"/>
+                <rect x="48" y="36" width="6" height="10" fill="#E97858"/>
+                <rect x="62" y="36" width="6" height="10" fill="#E97858"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JOURNEY -->
+  <section id="jornada" style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#0B0A09;border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div data-reveal="1" style="margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">[ A JORNADA ]</div>
+      <h2 data-reveal="1" class="scia-glitch" data-text="Do canal ao resultado" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(32px,5vw,60px);line-height:1;letter-spacing:-.02em;margin:0 0 64px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);position:relative;display:inline-block">Do canal ao resultado</h2>
+      <div id="scia-timeline" style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(16px,2vw,28px)">
+        <div style="position:absolute;left:0;right:0;top:7px;height:1px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.25) 0 8px,transparent 8px 16px)"></div>
+        <div class="scia-clawd" aria-hidden="true" style="position:absolute;top:-30px;left:0;width:80px;height:62px;pointer-events:none;z-index:5;transform:translate(0,-50%);transition:filter .3s">
+          <svg viewBox="0 0 80 62" width="80" height="62" shape-rendering="crispEdges" style="image-rendering:pixelated;overflow:visible">
+            <!-- body (carapace) - properly proportioned -->
+            <rect x="12" y="6" width="56" height="30" fill="#E97858"/>
+            <!-- pincers (claws on sides) - wider squares -->
+            <rect x="4" y="16" width="8" height="10" fill="#E97858"/>
+            <rect x="68" y="16" width="8" height="10" fill="#E97858"/>
+            <!-- eyes - separated and higher -->
+            <rect x="22" y="12" width="6" height="6" fill="#0B0A09"/>
+            <rect x="52" y="12" width="6" height="6" fill="#0B0A09"/>
+            <!-- legs (2 left + 2 right, symmetric with 10px center gap) -->
+            <g class="scia-clawd-legs">
+              <rect class="scia-leg scia-leg-1" x="12" y="36" width="6" height="10" fill="#E97858"/>
+              <rect class="scia-leg scia-leg-2" x="26" y="36" width="6" height="10" fill="#E97858"/>
+              <rect class="scia-leg scia-leg-3" x="48" y="36" width="6" height="10" fill="#E97858"/>
+              <rect class="scia-leg scia-leg-4" x="62" y="36" width="6" height="10" fill="#E97858"/>
+            </g>
+          </svg>
+        </div>
+        <div data-reveal="1" data-reveal-delay="0" style="position:relative;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="width:15px;height:15px;border-radius:50%;background:#E63B16;box-shadow:0 0 0 5px rgba(230,59,22,.18);margin-bottom:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A847C;margin-bottom:10px">[ A ] · DESCOBERTA</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:22px;margin:0 0 8px;color:#F2F0EC">Assiste o canal</h3><p style="font-size:14px;line-height:1.55;color:#8A847C;margin:0">Você se inscreve no canal e acompanha as aulas que vão ao ar.</p></div>
+        <div data-reveal="1" data-reveal-delay="100" style="position:relative;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="width:15px;height:15px;border-radius:50%;background:#E63B16;box-shadow:0 0 0 5px rgba(230,59,22,.18);margin-bottom:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A847C;margin-bottom:10px">[ B ] · PROVA</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:22px;margin:0 0 8px;color:#F2F0EC">Vê que funciona</h3><p style="font-size:14px;line-height:1.55;color:#8A847C;margin:0">Aplica o que aprendeu e sente o operacional diminuir.</p></div>
+        <div data-reveal="1" data-reveal-delay="200" style="position:relative;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div class="scia-tag-here" style="position:absolute;top:-30px;left:0;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#E63B16;animation:scia-blink 1.1s step-end infinite;transition:transform .35s cubic-bezier(.16,1,.3,1)">VOCÊ ESTÁ AQUI ↓</div><div style="width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(230,59,22,.35);margin-bottom:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A847C;margin-bottom:10px">[ C ] · ESCOLHA</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:22px;margin:0 0 8px;color:#F2F0EC">Escolhe o caminho</h3><p style="font-size:14px;line-height:1.55;color:#8A847C;margin:0">Faz sozinho com os agentes prontos, ou pede pra eu montar.</p></div>
+        <div data-reveal="1" data-reveal-delay="300" style="position:relative;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="width:15px;height:15px;border-radius:50%;background:#E63B16;box-shadow:0 0 0 5px rgba(230,59,22,.18);margin-bottom:26px"></div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:#8A847C;margin-bottom:10px">[ D ] · RESULTADO</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:22px;margin:0 0 8px;color:#F2F0EC">Tempo de volta</h3><p style="font-size:14px;line-height:1.55;color:#8A847C;margin:0">A IA roda o operacional. Você volta a decidir e crescer.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA O SERVICO (expanding) -->
+  <section id="servico" style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#EFECE7;color:#14110F;border-top:1px solid rgba(20,17,15,.08)">
+    <div style="max-width:1040px;margin:0 auto">
+      <div data-reveal="1" style="margin-bottom:14px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">[ SERVIÇO PERSONALIZADO ]</div>
+      <div data-reveal="1" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:40px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><h2 class="scia-glitch" data-text="Eu monto pra você" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(32px,5vw,60px);line-height:1;letter-spacing:-.02em;margin:0;position:relative;display:inline-block">Eu monto pra você</h2><span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;color:#9A938B;text-transform:uppercase">toque pra ler mais</span></div>
+      <div class="scia-accordion" style="border:1px solid rgba(20,17,15,.14);border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 18px 50px -20px rgba(20,17,15,.18)">
+        <div class="scia-acc-item" style="border-bottom:1px solid rgba(20,17,15,.10);position:relative;transition:background .3s ease">
+          <div class="scia-acc-bar" style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#E63B16;transform:scaleY(0);transform-origin:center;transition:transform .35s cubic-bezier(.16,1,.3,1)"></div>
+          <button onClick="{{ stepToggles.0 }}" style="width:100%;display:block;text-align:left;border:none;background:transparent;color:#14110F;cursor:pointer;padding:26px 28px;transition:padding .35s ease"><span style="display:flex;align-items:center;gap:22px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E63B16;letter-spacing:.1em;font-weight:600">[ 01 ]</span><span style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(20px,2.4vw,28px);flex:1">Diagnóstico</span><span class="scia-acc-icon" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(230,59,22,.10);color:#E63B16;line-height:1;font-size:22px;font-weight:300;transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s">{{ stepIcon.0 }}</span></span></button>
+          <div class="scia-acc-content" style="max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1)"><div style="padding:0 28px 26px 72px;font-size:16px;line-height:1.7;color:#4A443E">Entendo o fluxo da sua clínica, consultório ou laboratório e mapeio onde a IA devolve mais tempo: atendimento, agendamento, relatórios ou cobrança.</div></div>
+        </div>
+        <div class="scia-acc-item" style="border-bottom:1px solid rgba(20,17,15,.10);position:relative;transition:background .3s ease">
+          <div class="scia-acc-bar" style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#E63B16;transform:scaleY(0);transform-origin:center;transition:transform .35s cubic-bezier(.16,1,.3,1)"></div>
+          <button onClick="{{ stepToggles.1 }}" style="width:100%;display:block;text-align:left;border:none;background:transparent;color:#14110F;cursor:pointer;padding:26px 28px;transition:padding .35s ease"><span style="display:flex;align-items:center;gap:22px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E63B16;letter-spacing:.1em;font-weight:600">[ 02 ]</span><span style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(20px,2.4vw,28px);flex:1">Construção</span><span class="scia-acc-icon" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(230,59,22,.10);color:#E63B16;line-height:1;font-size:22px;font-weight:300;transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s">{{ stepIcon.1 }}</span></span></button>
+          <div class="scia-acc-content" style="max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1)"><div style="padding:0 28px 26px 72px;font-size:16px;line-height:1.7;color:#4A443E">Desenho e construo os agentes sob medida, com os frameworks de estratégia que já validei, prontos pra rodar no seu contexto, não num modelo genérico.</div></div>
+        </div>
+        <div class="scia-acc-item" style="border-bottom:1px solid rgba(20,17,15,.10);position:relative;transition:background .3s ease">
+          <div class="scia-acc-bar" style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#E63B16;transform:scaleY(0);transform-origin:center;transition:transform .35s cubic-bezier(.16,1,.3,1)"></div>
+          <button onClick="{{ stepToggles.2 }}" style="width:100%;display:block;text-align:left;border:none;background:transparent;color:#14110F;cursor:pointer;padding:26px 28px;transition:padding .35s ease"><span style="display:flex;align-items:center;gap:22px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E63B16;letter-spacing:.1em;font-weight:600">[ 03 ]</span><span style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(20px,2.4vw,28px);flex:1">Integração</span><span class="scia-acc-icon" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(230,59,22,.10);color:#E63B16;line-height:1;font-size:22px;font-weight:300;transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s">{{ stepIcon.2 }}</span></span></button>
+          <div class="scia-acc-content" style="max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1)"><div style="padding:0 28px 26px 72px;font-size:16px;line-height:1.7;color:#4A443E">Conecto os agentes às suas ferramentas (WhatsApp, agenda, planilhas e sistema de gestão), pra tudo conversar sem trabalho manual.</div></div>
+        </div>
+        <div class="scia-acc-item" style="position:relative;transition:background .3s ease">
+          <div class="scia-acc-bar" style="position:absolute;left:0;top:0;bottom:0;width:3px;background:#E63B16;transform:scaleY(0);transform-origin:center;transition:transform .35s cubic-bezier(.16,1,.3,1)"></div>
+          <button onClick="{{ stepToggles.3 }}" style="width:100%;display:block;text-align:left;border:none;background:transparent;color:#14110F;cursor:pointer;padding:26px 28px;transition:padding .35s ease"><span style="display:flex;align-items:center;gap:22px"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#E63B16;letter-spacing:.1em;font-weight:600">[ 04 ]</span><span style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:clamp(20px,2.4vw,28px);flex:1">Entrega &amp; suporte</span><span class="scia-acc-icon" style="display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:rgba(230,59,22,.10);color:#E63B16;line-height:1;font-size:22px;font-weight:300;transition:transform .4s cubic-bezier(.16,1,.3,1),background .3s">{{ stepIcon.3 }}</span></span></button>
+          <div class="scia-acc-content" style="max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1)"><div style="padding:0 28px 26px 72px;font-size:16px;line-height:1.7;color:#4A443E">Treino seu time, deixo tudo no ar e acompanho de perto. Você fica com agentes funcionando e com o passo a passo pra evoluir.</div></div>
+        </div>
+      </div>
+      <div data-reveal="1" style="margin-top:36px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><a href="#contato" data-magnetic="0.3" style="display:inline-flex;align-items:center;gap:10px;padding:18px 32px;background:#E63B16;color:#fff;border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 10px 34px rgba(230,59,22,.35);transition:background .3s;will-change:transform" style-hover="background:#FF5A2C"><svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Agendar uma conversa ›</a></div>
+    </div>
+  </section>
+
+  <!-- PLANOS / AGENTES -->
+  <section id="agentes" style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#0B0A09;border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1280px;margin:0 auto">
+      <div data-reveal="1" style="text-align:center;margin-bottom:56px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:18px">[ PRODUTOS PRONTOS ]</div><h2 class="scia-glitch" data-text="Comece hoje, do seu jeito" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(32px,5vw,60px);line-height:1;letter-spacing:-.02em;margin:0;position:relative;display:inline-block">Comece hoje, do seu jeito</h2></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch">
+        <div class="scia-plan-highlight" data-reveal="1" data-reveal-delay="0" style="display:flex;flex-direction:column;border:1px solid rgba(230,59,22,.55);border-radius:18px;padding:32px;background:linear-gradient(180deg,rgba(230,59,22,.16),#141210 60%);position:relative;box-shadow:0 24px 70px rgba(230,59,22,.18);transition:transform .35s;opacity:0;transform:translateY(28px);z-index:2" style-hover="transform:translateY(-6px)"><div class="scia-plan-badge" style="position:absolute;top:-12px;left:32px;background:#E63B16;color:#fff;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;padding:6px 12px;border-radius:999px">Mais procurado</div><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E0A38F;margin-bottom:16px">[ SKILLS ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:26px;margin:0 0 10px;line-height:1.05">Pacote de Skills<br>dos Gestores</h3><p style="font-size:14px;line-height:1.6;color:#C9C2BA;margin:0 0 18px">8 skills da Claude pro dia a dia do gestor da saúde, prontas pra usar:</p><div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px"><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Slides &amp; apresentações</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Dashboards</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Rotinas</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Gestor de CCIH</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Gestor de Enfermagem</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Gestor de NEP</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Gestor de Qualidade</span><span style="display:inline-flex;align-items:center;padding:6px 11px;border:1px solid rgba(230,59,22,.4);border-radius:999px;font-size:12px;color:#F4EFEA;background:rgba(230,59,22,.1)">Segurança do Paciente</span></div><sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}"><div style="margin-top:auto"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:42px;margin-bottom:6px;color:#fff">R$96</div><div style="font-size:13px;color:#C9C2BA;margin-bottom:24px">pagamento único · acesso imediato</div></div></sc-if><a href="#contato" data-magnetic="0.25" style="display:block;text-align:center;padding:15px;background:#E63B16;border-radius:999px;color:#fff;text-decoration:none;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:15px;transition:background .3s;will-change:transform" style-hover="background:#FF5A2C">Quero o pacote</a></div>
+        <div data-reveal="1" data-reveal-delay="100" style="display:flex;flex-direction:column;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:32px;background:#141210;transition:transform .35s,border-color .35s;opacity:0;transform:translateY(28px)" style-hover="border-color:rgba(230,59,22,.5)"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8A847C;margin-bottom:16px">[ CURSO COMPLETO ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:26px;margin:0 0 10px;line-height:1.05">Crie seu SaaS<br>do zero</h3><p style="font-size:14px;line-height:1.6;color:#8A847C;margin:0 0 22px">O curso completo de como construir um SaaS pro seu negócio com IA, da ideia ao produto no ar, mesmo sem saber programar.</p><div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px"><span style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#C9C2BA"><span style="color:#E63B16;font-weight:700">✓</span>Do zero ao deploy, passo a passo</span><span style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#C9C2BA"><span style="color:#E63B16;font-weight:700">✓</span>Aulas práticas e gravadas</span><span style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#C9C2BA"><span style="color:#E63B16;font-weight:700">✓</span>Acesso vitalício ao conteúdo</span></div><sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}"><div style="margin-top:auto"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:42px;margin-bottom:6px">R$297</div><div style="font-size:13px;color:#8A847C;margin-bottom:24px">pagamento único · acesso vitalício</div></div></sc-if><a href="#contato" style="display:block;text-align:center;padding:15px;border:1px solid rgba(255,255,255,.22);border-radius:999px;color:#F2F0EC;text-decoration:none;font-family:'Funnel Display',sans-serif;font-weight:600;font-size:15px;transition:border-color .3s,background .3s" style-hover="border-color:#E63B16;background:rgba(230,59,22,.1)">Quero o curso</a></div>
+        <div id="contato" data-reveal="1" data-reveal-delay="200" style="display:flex;flex-direction:column;border:1px solid rgba(230,59,22,.3);border-radius:18px;padding:32px;background:radial-gradient(420px 220px at 80% 0%,rgba(230,59,22,.14),transparent 60%),#0E0C0B;transition:transform .35s,border-color .35s;opacity:0;transform:translateY(28px)" style-hover="border-color:rgba(230,59,22,.6);transform:translateY(-6px)"><div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E63B16;margin-bottom:16px">[ SOB MEDIDA ]</div><h3 style="font-family:'Funnel Display',sans-serif;font-weight:700;font-size:26px;margin:0 0 10px;line-height:1.05">Precisa de algo<br>só seu?</h3><p style="font-size:14px;line-height:1.6;color:#B7B1A9;margin:0 0 22px">Eu desenho e construo agentes e skills sob medida pro seu negócio de saúde, do diagnóstico ao deploy, com suporte de verdade.</p><div style="display:flex;flex-direction:column;gap:11px;margin-bottom:26px"><span style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#D9D4CC"><span style="color:#E63B16;font-weight:700">✓</span>Diagnóstico do seu fluxo</span><span style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#D9D4CC"><span style="color:#E63B16;font-weight:700">✓</span>Agentes integrados às suas ferramentas</span><span style="display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#D9D4CC"><span style="color:#E63B16;font-weight:700">✓</span>Treinamento do time e suporte</span></div><div style="margin-top:auto"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:32px;margin-bottom:6px">Sob orçamento</div><div style="font-size:13px;color:#8A847C;margin-bottom:24px">conversamos sobre o seu caso</div></div><a href="#contato" data-magnetic="0.25" style="display:block;text-align:center;padding:15px;background:#E63B16;border-radius:999px;color:#fff;text-decoration:none;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:15px;transition:background .3s;will-change:transform" style-hover="background:#FF5A2C">Agendar conversa ›</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section style="position:relative;z-index:4;padding:clamp(56px,7vw,100px) 0;background:#F4F2EF;color:#14110F;border-top:1px solid rgba(20,17,15,.08);overflow:hidden">
+    <div style="max-width:1280px;margin:0 auto 40px;padding:0 6vw"><div data-reveal="1" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:16px">[ VEJA O QUE DISSERAM ]</div><h2 class="scia-glitch" data-text="Gestores da saúde" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(32px,5vw,60px);line-height:1;letter-spacing:-.02em;margin:0;position:relative;display:inline-block">Gestores da saúde</h2></div><span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;color:#9A938B;text-transform:uppercase">puxe e arraste →</span></div></div>
+    <div data-drag="1" style="display:flex;gap:24px;overflow-x:auto;padding:14px 6vw 28px;cursor:grab;scrollbar-width:none;user-select:none">
+      <blockquote style="flex:0 0 360px;margin:0;border:1px solid rgba(20,17,15,.1);border-radius:16px;padding:30px;background:#fff;box-shadow:0 12px 36px rgba(20,17,15,.06);transform:rotate(-1deg)"><p style="font-size:16px;line-height:1.6;color:#2A2622;margin:0 0 22px">"Eu vivia perdida em planilha. A skill de relatórios me entregou os números prontos e eu voltei pra estratégia da clínica."</p><footer style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A938B">Dra. Helena · clínica de dermatologia</footer></blockquote>
+      <blockquote style="flex:0 0 360px;margin:0;border:1px solid rgba(20,17,15,.1);border-radius:16px;padding:30px;background:#fff;box-shadow:0 12px 36px rgba(20,17,15,.06);transform:rotate(1deg)"><p style="font-size:16px;line-height:1.6;color:#2A2622;margin:0 0 22px">"Achava que IA era coisa de empresa grande. Comecei pelas aulas grátis e em uma semana montei minha primeira skill sozinho."</p><footer style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A938B">Marcos · gestor de laboratório</footer></blockquote>
+      <blockquote style="flex:0 0 360px;margin:0;border:1px solid rgba(20,17,15,.1);border-radius:16px;padding:30px;background:#fff;box-shadow:0 12px 36px rgba(20,17,15,.06);transform:rotate(-.5deg)"><p style="font-size:16px;line-height:1.6;color:#2A2622;margin:0 0 22px">"A skill de gestão organiza meus indicadores. Começo o dia sabendo onde olhar, não no escuro."</p><footer style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A938B">Patrícia · rede de consultórios</footer></blockquote>
+      <blockquote style="flex:0 0 360px;margin:0;border:1px solid rgba(20,17,15,.1);border-radius:16px;padding:30px;background:#fff;box-shadow:0 12px 36px rgba(20,17,15,.06);transform:rotate(1.2deg)"><p style="font-size:16px;line-height:1.6;color:#2A2622;margin:0 0 22px">"A Rosa montou tudo pra mim. Entreguei o problema e recebi as skills rodando, integradas ao meu dia a dia."</p><footer style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A938B">Dr. Caio · hospital-dia</footer></blockquote>
+      <blockquote style="flex:0 0 360px;margin:0;border:1px solid rgba(20,17,15,.1);border-radius:16px;padding:30px;background:#fff;box-shadow:0 12px 36px rgba(20,17,15,.06);transform:rotate(-1deg)"><p style="font-size:16px;line-height:1.6;color:#2A2622;margin:0 0 22px">"Cortei horas de relatório manual por semana. O time parou de viver no operacional e começou a crescer."</p><footer style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A938B">Juliana · coordenadora de rede</footer></blockquote>
+      <blockquote style="flex:0 0 360px;margin:0;border:1px solid rgba(20,17,15,.1);border-radius:16px;padding:30px;background:#fff;box-shadow:0 12px 36px rgba(20,17,15,.06);transform:rotate(.6deg)"><p style="font-size:16px;line-height:1.6;color:#2A2622;margin:0 0 22px">"Conteúdo direto ao ponto e sem enrolação. Finalmente entendi onde a IA encaixa na gestão de saúde."</p><footer style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#9A938B">Rafael · fundador de healthtech</footer></blockquote>
+    </div>
+    <div style="max-width:1280px;margin:18px auto 0;padding:0 6vw;display:flex;align-items:center;justify-content:center;gap:22px">
+      <button data-car-prev aria-label="Anterior" style="width:42px;height:42px;border-radius:50%;border:1px solid rgba(20,17,15,.22);background:transparent;color:#14110F;font-size:20px;line-height:1;cursor:pointer;transition:border-color .3s,background .3s" style-hover="border-color:#E63B16;background:rgba(230,59,22,.12)">‹</button>
+      <div data-car-dots style="display:flex;align-items:center;gap:10px"></div>
+      <button data-car-next aria-label="Próximo" style="width:42px;height:42px;border-radius:50%;border:1px solid rgba(20,17,15,.22);background:transparent;color:#14110F;font-size:20px;line-height:1;cursor:pointer;transition:border-color .3s,background .3s" style-hover="border-color:#E63B16;background:rgba(230,59,22,.12)">›</button>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre" style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#0B0A09;border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1180px;margin:0 auto;display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,72px);align-items:center">
+      <div data-reveal="1" style="position:relative;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="position:absolute;inset:-12%;background:radial-gradient(circle at 40% 40%,rgba(230,59,22,.45),transparent 65%);filter:blur(8px);z-index:0;animation:scia-pulse 5s ease-in-out infinite"></div><div data-tilt="10" style="position:relative;z-index:1;perspective:1100px"><div data-tilt-inner style="position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:linear-gradient(160deg,#E63B16,#9c2a0e 55%,#3a1206);box-shadow:0 30px 80px rgba(0,0,0,.5);transition:transform .35s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d"><img src="rosa.png" alt="Rosa Kethllyn" draggable="false" style="display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 16%" /><div data-tilt-sheen style="position:absolute;inset:0;pointer-events:none;mix-blend-mode:overlay"></div></div></div></div>
+      <div data-reveal="1" data-reveal-delay="100" style="opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:18px">[ QUEM SOU ]</div><h2 class="scia-glitch" data-text="Rosa Kethllyn" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(34px,4.6vw,58px);line-height:1;letter-spacing:-.02em;margin:0 0 24px;position:relative;display:inline-block">Rosa Kethllyn</h2><p style="font-size:16px;line-height:1.7;color:#B7B1A9;margin:0 0 18px">Criei o Estrateg<span style="color:#E63B16">[IA]</span> porque vi de perto um problema: gestores da saúde presos no operacional, sem tempo de pensar em estratégia, e sem tempo de virar especialistas em IA.</p><p style="font-size:16px;line-height:1.7;color:#B7B1A9;margin:0 0 30px">Uso inteligência artificial aplicada à estratégia pra construir agentes, frameworks e ferramentas que tiram o gestor do operacional e devolvem ele pro que importa: decidir, crescer e cuidar melhor dos pacientes.</p><div style="display:flex;flex-wrap:wrap;gap:14px"><div class="scia-about-card" style="border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 20px;cursor:default;transition:border-color .35s,transform .35s cubic-bezier(.16,1,.3,1),box-shadow .4s;will-change:transform"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:26px;color:#E63B16;transition:transform .35s cubic-bezier(.16,1,.3,1)">YouTube</div><div style="font-size:12px;color:#8A847C;font-family:'JetBrains Mono',monospace;letter-spacing:.08em">ensino · grátis</div></div><div class="scia-about-card" style="border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 20px;cursor:default;transition:border-color .35s,transform .35s cubic-bezier(.16,1,.3,1),box-shadow .4s;will-change:transform"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:26px;color:#E63B16;transition:transform .35s cubic-bezier(.16,1,.3,1)">Agentes</div><div style="font-size:12px;color:#8A847C;font-family:'JetBrains Mono',monospace;letter-spacing:.08em">produto · self-serve</div></div><div class="scia-about-card" style="border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:14px 20px;cursor:default;transition:border-color .35s,transform .35s cubic-bezier(.16,1,.3,1),box-shadow .4s;will-change:transform"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:26px;color:#E63B16;transition:transform .35s cubic-bezier(.16,1,.3,1)">Serviço</div><div style="font-size:12px;color:#8A847C;font-family:'JetBrains Mono',monospace;letter-spacing:.08em">sob medida</div></div></div></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="position:relative;z-index:4;padding:clamp(56px,7vw,110px) 6vw;background:#EFECE7;color:#14110F;border-top:1px solid rgba(20,17,15,.08)">
+    <div style="max-width:920px;margin:0 auto">
+      <div data-reveal="1" style="text-align:center;margin-bottom:48px;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)"><div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:18px">[ TIRE SUAS DÚVIDAS ]</div><h2 class="scia-glitch" data-text="Perguntas frequentes" style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(32px,5vw,56px);line-height:1;letter-spacing:-.02em;margin:0;position:relative;display:inline-block">Perguntas frequentes</h2></div>
+      <div style="border-top:1px solid rgba(20,17,15,.12)">
+        <button onClick="{{ faqToggles.0 }}" style="width:100%;text-align:left;border:none;border-bottom:1px solid rgba(20,17,15,.12);background:transparent;color:#14110F;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s" style-hover="color:#FF5A2C"><span style="font-family:'Funnel Display',sans-serif;font-weight:600;font-size:clamp(17px,2vw,21px)">Preciso saber programar?</span><span style="font-size:28px;color:#E63B16;line-height:1;flex-shrink:0">{{ faqIcon.0 }}</span></button>
+        <sc-if value="{{ faqOpen.0 }}" hint-placeholder-val="{{ true }}"><div style="padding:4px 4px 26px;border-bottom:1px solid rgba(20,17,15,.12);font-size:16px;line-height:1.7;color:#4A443E">Não. As aulas começam do zero absoluto e os agentes prontos vêm com setup incluído. Se preferir, eu monto tudo pra você no serviço personalizado.</div></sc-if>
+        <button onClick="{{ faqToggles.1 }}" style="width:100%;text-align:left;border:none;border-bottom:1px solid rgba(20,17,15,.12);background:transparent;color:#14110F;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s" style-hover="color:#FF5A2C"><span style="font-family:'Funnel Display',sans-serif;font-weight:600;font-size:clamp(17px,2vw,21px)">Quanto tempo leva pra implementar?</span><span style="font-size:28px;color:#E63B16;line-height:1;flex-shrink:0">{{ faqIcon.1 }}</span></button>
+        <sc-if value="{{ faqOpen.1 }}" hint-placeholder-val="{{ false }}"><div style="padding:4px 4px 26px;border-bottom:1px solid rgba(20,17,15,.12);font-size:16px;line-height:1.7;color:#4A443E">Os agentes prontos rodam no mesmo dia. No serviço personalizado, do diagnóstico ao deploy costuma levar de uma a três semanas, dependendo da complexidade do seu fluxo.</div></sc-if>
+        <button onClick="{{ faqToggles.2 }}" style="width:100%;text-align:left;border:none;border-bottom:1px solid rgba(20,17,15,.12);background:transparent;color:#14110F;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s" style-hover="color:#FF5A2C"><span style="font-family:'Funnel Display',sans-serif;font-weight:600;font-size:clamp(17px,2vw,21px)">Serve pra qualquer negócio de saúde?</span><span style="font-size:28px;color:#E63B16;line-height:1;flex-shrink:0">{{ faqIcon.2 }}</span></button>
+        <sc-if value="{{ faqOpen.2 }}" hint-placeholder-val="{{ false }}"><div style="padding:4px 4px 26px;border-bottom:1px solid rgba(20,17,15,.12);font-size:16px;line-height:1.7;color:#4A443E">Sim: clínicas, hospitais, laboratórios, consultórios, redes e healthtechs. Atendo também fundadores e coordenadores que precisam acelerar resultado sem aumentar o time.</div></sc-if>
+        <button onClick="{{ faqToggles.3 }}" style="width:100%;text-align:left;border:none;border-bottom:1px solid rgba(20,17,15,.12);background:transparent;color:#14110F;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s" style-hover="color:#FF5A2C"><span style="font-family:'Funnel Display',sans-serif;font-weight:600;font-size:clamp(17px,2vw,21px)">Os meus dados ficam seguros?</span><span style="font-size:28px;color:#E63B16;line-height:1;flex-shrink:0">{{ faqIcon.3 }}</span></button>
+        <sc-if value="{{ faqOpen.3 }}" hint-placeholder-val="{{ false }}"><div style="padding:4px 4px 26px;border-bottom:1px solid rgba(20,17,15,.12);font-size:16px;line-height:1.7;color:#4A443E">Sim. Os agentes são configurados respeitando o sigilo dos dados de pacientes e as boas práticas de privacidade. Você mantém o controle das suas informações.</div></sc-if>
+        <button onClick="{{ faqToggles.4 }}" style="width:100%;text-align:left;border:none;border-bottom:1px solid rgba(20,17,15,.12);background:transparent;color:#14110F;cursor:pointer;padding:26px 4px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:color .3s" style-hover="color:#FF5A2C"><span style="font-family:'Funnel Display',sans-serif;font-weight:600;font-size:clamp(17px,2vw,21px)">Por onde eu começo?</span><span style="font-size:28px;color:#E63B16;line-height:1;flex-shrink:0">{{ faqIcon.4 }}</span></button>
+        <sc-if value="{{ faqOpen.4 }}" hint-placeholder-val="{{ false }}"><div style="padding:4px 4px 26px;font-size:16px;line-height:1.7;color:#4A443E">Pelo canal: inscreva-se e acompanhe as aulas, que sobem uma a uma. Quando quiser acelerar, escolha um agente pronto ou agende uma conversa pra um projeto sob medida.</div></sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section style="position:relative;z-index:4;padding:clamp(64px,9vw,140px) 6vw;text-align:center;background:radial-gradient(800px 420px at 50% 120%,rgba(230,59,22,.4),transparent 60%),#0B0A09;border-top:1px solid rgba(255,255,255,.07)">
+    <div data-reveal="1" style="max-width:840px;margin:0 auto;opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)">
+      <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#E63B16;margin-bottom:22px">[ PRÓXIMO PASSO ]</div>
+      <h2 class="scia-glitch" data-text="Tire a IA do papel. Comece de graça." style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(36px,6vw,76px);line-height:.98;letter-spacing:-.03em;margin:0 0 32px;position:relative;display:inline-block">Tire a IA do papel.<br>Comece de graça.</h2>
+      <div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center">
+        <a href="#canal" data-magnetic="0.3" style="display:inline-flex;align-items:center;gap:11px;padding:18px 34px;background:#E63B16;color:#fff;border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:700;font-size:16px;text-decoration:none;box-shadow:0 12px 40px rgba(230,59,22,.45);transition:background .3s;will-change:transform" style-hover="background:#FF5A2C"><svg width="22" height="16" viewBox="0 0 28 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><rect width="28" height="20" rx="5" fill="#fff"/><path d="M11.5 6L18 10L11.5 14V6Z" fill="#E63B16"/></svg>Conhecer o canal ›</a>
+        <a href="#servico" data-magnetic="0.3" class="scia-btn-ghost" style="display:inline-flex;align-items:center;gap:9px;padding:18px 30px;background:transparent;color:#F2F0EC;border:1px solid rgba(255,255,255,.24);border-radius:999px;font-family:'Funnel Display',sans-serif;font-weight:600;font-size:16px;text-decoration:none;will-change:transform"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>Agendar uma conversa</a>
+        <a href="#agentes" class="scia-link" style="display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:#E63B16;text-decoration:none;align-self:center">Ver skills prontas →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="position:relative;z-index:4;padding:64px 6vw 0;background:#0B0A09;border-top:1px solid rgba(255,255,255,.07)">
+    <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:40px;padding-bottom:56px">
+      <div style="max-width:340px"><div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:26px;letter-spacing:-.02em;margin-bottom:14px">Estrateg<span style="color:#E63B16">[IA]</span></div><p style="font-size:14px;line-height:1.6;color:#8A847C;margin:0">IA aplicada à estratégia em saúde. Ensino, agentes prontos e serviço personalizado pra tirar o gestor do operacional.</p></div>
+      <div style="display:flex;gap:clamp(32px,6vw,80px);flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5E5851;margin-bottom:4px">Ecossistema</span><a href="#canal" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">Canal · YouTube</a><a href="#agentes" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">Skills prontas</a><a href="#servico" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">Serviço sob medida</a></div>
+        <div style="display:flex;flex-direction:column;gap:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5E5851;margin-bottom:4px">Site</span><a href="#jornada" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">A jornada</a><a href="#sobre" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">Sobre a Rosa</a><a href="#faq" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">FAQ</a></div>
+        <div style="display:flex;flex-direction:column;gap:14px"><span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5E5851;margin-bottom:4px">Contato</span><a href="#contato" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">Agendar conversa</a><a href="#" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">Instagram</a><a href="#" style="font-size:14px;color:#B7B1A9;text-decoration:none;transition:color .25s" style-hover="color:#E63B16;text-decoration:underline;text-underline-offset:5px">YouTube</a></div>
+      </div>
+    </div>
+    <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding:22px 0;border-top:1px solid rgba(255,255,255,.07);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#5E5851"><span>© 2026 Estratég[IA] · Rosa Kethllyn</span><span>Feito com IA aplicada à estratégia</span></div>
+    <div style="font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(60px,16vw,240px);line-height:.8;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);text-align:center;padding-top:20px;white-space:nowrap;overflow:hidden">ESTRATÉG[IA]</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;heroPortrait&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;showAgentPrices&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.root = React.createRef();
+    this.state = { faq: 0, step: 0, bio: false };
+  }
+  get reduce() { return !!this.props.reduceMotion; }
+  componentDidMount() {
+    this._tries = 0;
+    this.runEffects();
+    this._esc = (e) => { if (e.key === 'Escape' && this.state.bio) { document.body.style.overflow = ''; this.setState({ bio: false }); } };
+    document.addEventListener('keydown', this._esc);
+  }
+  runEffects() {
+    const root = (this.root && this.root.current) || document;
+    const rev = root.querySelectorAll('[data-reveal]');
+    if (!rev.length && this._tries < 30) {
+      this._tries++;
+      requestAnimationFrame(() => this.runEffects());
+      return;
+    }
+    this.shown = this.shown || new Set();
+    this.revealEls = Array.from(rev).filter(e => !this.shown.has(e));
+    this.countEls = Array.from(root.querySelectorAll('[data-count]'));
+    if (this.reduce) {
+      this.revealEls.forEach(e => { e.style.opacity = 1; e.style.transform = 'none'; });
+      this.countEls.forEach(e => this.runCounter(e));
+      this.revealEls = []; this.countEls = [];
+    }
+    this.setupMagnetic(root);
+    this.setupDrag(root);
+    this.setupGlow(root);
+    this.setupTilt(root);
+    this.setupCarousel(root);
+    this.setupAccordion(root);
+    this.setupHackerField(root);
+    this.setupRowCanvases(root);
+    this.setupClawd(root);
+    this.setupManifestoUnderline(root);
+    this.setupManifestoGlitch(root);
+    this.setupAboutCards(root);
+    const pending = () => (this.revealEls && this.revealEls.length) || (this.countEls && this.countEls.length);
+    this._loop = () => {
+      this.tick();
+      if (pending()) this._raf = requestAnimationFrame(this._loop);
+      else this._raf = null;
+    };
+    this._loop();
+    // setInterval still fires when the tab/iframe is hidden (rAF is paused there),
+    // so reveals + counters resolve even in a backgrounded document.
+    this._iv = setInterval(() => { this.tick(); this.reassert(); }, 220);
+    this._onScroll = () => this.tick();
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    document.addEventListener('scroll', this._onScroll, { capture: true, passive: true });
+    window.addEventListener('resize', this._onScroll, { passive: true });
+    this._vis = () => { if (document.visibilityState === 'visible') { this.tick(); this.reassert(); } };
+    document.addEventListener('visibilitychange', this._vis);
+  }
+  setupMagnetic(root) {
+    if (this.reduce) return;
+    root.querySelectorAll('[data-magnetic]').forEach(el => {
+      const s = parseFloat(el.getAttribute('data-magnetic')) || 0.3;
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        el.style.transform = 'translate(' + (x * s) + 'px,' + (y * s) + 'px)';
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+    });
+  }
+  setupDrag(root) {
+    root.querySelectorAll('[data-drag]').forEach(el => {
+      let down = false, sx = 0, sl = 0, moved = false;
+      el.addEventListener('pointerdown', (e) => {
+        down = true; moved = false; sx = e.clientX; sl = el.scrollLeft;
+        try { el.setPointerCapture(e.pointerId); } catch (x) {}
+        el.style.cursor = 'grabbing';
+      });
+      el.addEventListener('pointermove', (e) => {
+        if (!down) return;
+        const dx = e.clientX - sx;
+        if (Math.abs(dx) > 4) moved = true;
+        el.scrollLeft = sl - dx;
+      });
+      const up = () => { down = false; el.style.cursor = 'grab'; };
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+      el.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    });
+  }
+  setupGlow(root) {
+    const glow = root.querySelector('[data-cursor-glow]');
+    if (!glow) return;
+    if (this.reduce) { glow.style.display = 'none'; return; }
+    this._mm = (e) => { glow.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)'; };
+    window.addEventListener('mousemove', this._mm, { passive: true });
+  }
+  setupTilt(root) {
+    if (this.reduce) return;
+    const applyTilt = (card) => {
+      if (card.__sciaTiltReady) return;
+      card.__sciaTiltReady = true;
+      // data-tilt-inner pode ser o próprio card ou um filho
+      const inner = card.hasAttribute('data-tilt-inner') ? card : (card.querySelector('[data-tilt-inner]') || card);
+      const sheen = card.querySelector('[data-tilt-sheen]');
+      const max = parseFloat(card.getAttribute('data-tilt')) || 22;
+      const intensity = parseFloat(card.getAttribute('data-tilt-intensity')) || 1;
+      const img = inner.querySelector('img');
+      let raf = null;
+      const move = (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          // Tilt 3D do card inteiro (mais agressivo)
+          inner.style.transform = 'translateZ(90px) rotateX(' + (-py * max) + 'deg) rotateY(' + (px * max) + 'deg) scale(' + (1 + 0.06 * intensity) + ')';
+          // Imagem: parallax mais sutil pra não mascarar o tilt do card
+          if (img) {
+            img.style.transform = 'translate(' + (px * -10 * intensity) + 'px,' + (py * -10 * intensity) + 'px) scale(' + (1 + 0.03 * intensity) + ')';
+          }
+          // Sheen (brilho que segue o mouse)
+          if (sheen) sheen.style.background = 'radial-gradient(420px circle at ' + ((px + 0.5) * 100) + '% ' + ((py + 0.5) * 100) + '%, rgba(255,255,255,.35), transparent 55%)';
+          // Sombra dramaticamente direcional pra reforçar a sensação 3D
+          card.style.boxShadow = (px * -40 * intensity) + 'px ' + (py * -40 * intensity) + 'px 80px rgba(230,59,22,.65), 0 50px 130px rgba(0,0,0,.7)';
+        });
+      };
+      const leave = () => {
+        if (raf) cancelAnimationFrame(raf);
+        inner.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1) translateZ(0)';
+        if (img) img.style.transform = 'translate(0,0) scale(1)';
+        if (sheen) sheen.style.background = 'transparent';
+        card.style.boxShadow = '';
+      };
+      card.addEventListener('pointermove', move);
+      card.addEventListener('pointerleave', leave);
+    };
+    // Aplica nos elementos atuais
+    const run = () => (root || document).querySelectorAll('[data-tilt]').forEach(applyTilt);
+    run();
+    // Vigia novos elementos (ex: modal da Rosa que aparece via sc-if)
+    if (typeof MutationObserver !== 'undefined') {
+      const obs = new MutationObserver(() => run());
+      obs.observe(document.body, { childList: true, subtree: true });
+      this._tiltObserver = obs;
+    }
+  }
+  setupCarousel(root) {
+    const track = root.querySelector('[data-drag]');
+    const dotsWrap = root.querySelector('[data-car-dots]');
+    const prev = root.querySelector('[data-car-prev]');
+    const next = root.querySelector('[data-car-next]');
+    if (!track || !dotsWrap) return;
+    const cards = Array.from(track.children);
+    const step = () => (cards[0] ? cards[0].getBoundingClientRect().width + 24 : 380);
+    const dots = cards.map((c, i) => {
+      const d = document.createElement('button');
+      d.style.cssText = 'border:none;padding:0;cursor:pointer;height:8px;width:8px;border-radius:9px;background:rgba(20,17,15,.30);transition:width .3s,background .3s';
+      d.addEventListener('click', () => track.scrollTo({ left: i * step(), behavior: 'smooth' }));
+      dotsWrap.appendChild(d);
+      return d;
+    });
+    const sync = () => {
+      const i = Math.round(track.scrollLeft / step());
+      dots.forEach((d, k) => {
+        const on = k === i;
+        d.style.background = on ? '#4A443E' : 'rgba(20,17,15,.30)';
+        d.style.width = on ? '26px' : '8px';
+      });
+    };
+    if (prev) prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    if (next) next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', () => {
+      if (this._cscroll) cancelAnimationFrame(this._cscroll);
+      this._cscroll = requestAnimationFrame(sync);
+    }, { passive: true });
+    sync();
+  }
+  setupAccordion(root) {
+    const items = root.querySelectorAll('.scia-accordion .scia-acc-item');
+    if (!items.length) return;
+    items.forEach((item, i) => {
+      const btn = item.querySelector('button');
+      const content = item.querySelector('.scia-acc-content');
+      const bar = item.querySelector('.scia-acc-bar');
+      const icon = item.querySelector('.scia-acc-icon');
+      if (!btn || !content) return;
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const isOpen = item.classList.contains('scia-acc-open');
+        // Fecha os outros
+        items.forEach((other) => {
+          if (other !== item && other.classList.contains('scia-acc-open')) {
+            other.classList.remove('scia-acc-open');
+            const c = other.querySelector('.scia-acc-content');
+            if (c) c.style.maxHeight = '0px';
+            const ic = other.querySelector('.scia-acc-icon');
+            if (ic) ic.textContent = '+';
+          }
+        });
+        if (isOpen) {
+          item.classList.remove('scia-acc-open');
+          content.style.maxHeight = '0px';
+          if (icon) icon.textContent = '+';
+        } else {
+          item.classList.add('scia-acc-open');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          if (icon) icon.textContent = '–';
+          // Após a animação, libera o crescimento (conteúdo dinâmico).
+          setTimeout(() => {
+            if (item.classList.contains('scia-acc-open')) {
+              content.style.maxHeight = 'none';
+            }
+          }, 500);
+        }
+      });
+    });
+  }
+  componentWillUnmount() {
+    if (this._mm) window.removeEventListener('mousemove', this._mm);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._iv) clearInterval(this._iv);
+    if (this._vis) document.removeEventListener('visibilitychange', this._vis);
+    if (this._par) { window.removeEventListener('scroll', this._par); document.removeEventListener('scroll', this._par, { capture: true }); }
+    if (this._tiltObserver) { this._tiltObserver.disconnect(); this._tiltObserver = null; }
+    if (this._hackerCleanup) this._hackerCleanup();
+    if (this._rowCanvasCleanup) this._rowCanvasCleanup();
+    if (this._gwCleanup) this._gwCleanup();
+    if (this._clawdCleanup) this._clawdCleanup();
+    if (this._esc) document.removeEventListener('keydown', this._esc);
+    if (this._onScroll) {
+      window.removeEventListener('scroll', this._onScroll);
+      document.removeEventListener('scroll', this._onScroll, { capture: true });
+      window.removeEventListener('resize', this._onScroll);
+    }
+  }
+  setupHackerField(root) {
+    const c = Array.from(root.querySelectorAll('canvas')).find(el => el.getAttribute('ref') === '{{ hackerCanvas }}') || root.querySelector('header canvas');
+    if (!c) return;
+    const ctx = c.getContext('2d', { alpha: true });
+    if (!ctx) return;
+    const syms = '<>{}[]()/\#%&*+=-_:;?01'.split('');
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0, grid = [];
+    const cell = 18;
+    let mouse = { x: -9999, y: -9999, active: false };
+    const resize = () => {
+      const r = c.parentElement.getBoundingClientRect();
+      W = r.width; H = r.height;
+      c.width = W * dpr; c.height = H * dpr;
+      c.style.width = W + 'px'; c.style.height = H + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const cols = Math.ceil(W / cell) + 1, rows = Math.ceil(H / cell) + 1;
+      grid = new Array(cols * rows);
+      for (let i = 0; i < grid.length; i++) {
+        grid[i] = { ch: syms[(Math.random() * syms.length) | 0], glow: 0 };
+      }
+    };
+    resize();
+    const onResize = () => resize();
+    window.addEventListener('resize', onResize);
+    const onMove = (e) => {
+      const r = c.getBoundingClientRect();
+      mouse.x = e.clientX - r.left;
+      mouse.y = e.clientY - r.top;
+      mouse.active = true;
+    };
+    const onLeave = () => { mouse.x = -9999; mouse.y = -9999; mouse.active = false; };
+    c.addEventListener('mousemove', onMove);
+    c.addEventListener('mouseleave', onLeave);
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      const cols = Math.ceil(W / cell) + 1;
+      for (let i = 0; i < grid.length; i++) {
+        if (Math.random() < 0.006) grid[i].ch = syms[(Math.random() * syms.length) | 0];
+        const cx = i % cols, ry = (i / cols) | 0;
+        const px = cx * cell + cell / 2, py = ry * cell + cell / 2;
+        if (mouse.active) {
+          const dx = px - mouse.x, dy = py - mouse.y;
+          const d = Math.hypot(dx, dy);
+          if (d < 160) {
+            const k = 1 - d / 160;
+            grid[i].glow = Math.min(1, grid[i].glow + k * 0.45);
+            if (Math.random() < k * 0.55) grid[i].ch = syms[(Math.random() * syms.length) | 0];
+          }
+        }
+        grid[i].glow *= 0.93;
+        const g = grid[i].glow;
+        if (g > 0.04) {
+          ctx.fillStyle = 'rgba(230,59,22,' + (0.3 + g * 0.7) + ')';
+          ctx.shadowColor = 'rgba(255,90,44,' + g + ')';
+          ctx.shadowBlur = 10 * g;
+          ctx.font = '13px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(grid[i].ch, px, py);
+        } else {
+          ctx.fillStyle = 'rgba(180,170,160,0.18)';
+          ctx.shadowBlur = 0;
+          ctx.font = '13px "JetBrains Mono", monospace';
+          ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+          ctx.fillText(grid[i].ch, px, py);
+        }
+      }
+      this._hackerRAF = requestAnimationFrame(draw);
+    };
+    if (this.reduce) {
+      ctx.fillStyle = 'rgba(11,10,9,1)';
+      ctx.fillRect(0, 0, W, H);
+      return;
+    }
+    draw();
+    this._hackerCleanup = () => {
+      cancelAnimationFrame(this._hackerRAF);
+      window.removeEventListener('resize', onResize);
+      c.removeEventListener('mousemove', onMove);
+      c.removeEventListener('mouseleave', onLeave);
+    };
+  }
+  vh() { return window.innerHeight || document.documentElement.clientHeight; }
+  reveal(el) {
+    const d = parseFloat(el.getAttribute('data-reveal-delay') || 0);
+    el.style.transitionDelay = d + 'ms';
+    el.style.opacity = 1;
+    el.style.transform = 'none';
+    if (this.shown) this.shown.add(el);
+  }
+  componentDidUpdate() {
+    if (this.shown) this.shown.forEach(el => {
+      if (el && el.isConnected) {
+        el.style.transitionDelay = '0ms';
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      }
+    });
+  }
+  reassert() {
+    if (this.shown) this.shown.forEach(el => {
+      if (el && el.isConnected && getComputedStyle(el).opacity !== '1') {
+        el.style.transitionDelay = '0ms';
+        el.style.opacity = 1;
+        el.style.transform = 'none';
+      }
+    });
+  }
+  runCounter(el) {
+    const fmt = (v, dec) => v.toLocaleString('pt-BR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+    const target = parseFloat(el.getAttribute('data-count'));
+    const dec = parseInt(el.getAttribute('data-dec') || 0);
+    const pre = el.getAttribute('data-pre') || '';
+    const suf = el.getAttribute('data-suf') || '';
+    if (this.reduce) { el.textContent = pre + fmt(target, dec) + suf; return; }
+    const dur = 1700, t0 = performance.now();
+    const iv = setInterval(() => {
+      let p = Math.min(1, (performance.now() - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + fmt(target * e, dec) + suf;
+      if (p >= 1) clearInterval(iv);
+    }, 33);
+  }
+  tick() {
+    const vh = this.vh();
+    if (this.revealEls && this.revealEls.length) {
+      this.revealEls = this.revealEls.filter(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * 0.92 && r.bottom > -40) { this.reveal(el); return false; }
+        return true;
+      });
+    }
+    if (this.countEls && this.countEls.length) {
+      this.countEls = this.countEls.filter(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < vh * 0.85 && r.bottom > 0) { this.runCounter(el); return false; }
+        return true;
+      });
+    }
+  }
+  setupRowCanvases(root) {
+    const syms = '<>{}[]()/\#%&*+=-_:;?01'.split('');
+    const rows = root.querySelectorAll('a.scia-row canvas');
+    if (!rows.length) return;
+    const rafs = [];
+    rows.forEach((c) => {
+      const row = c.parentElement;
+      if (!row) return;
+      const ctx = c.getContext('2d', { alpha: true });
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let W = 0, H = 0, grid = [];
+      const resize = () => {
+        const r = row.getBoundingClientRect();
+        W = r.width; H = r.height;
+        c.width = W * dpr; c.height = H * dpr;
+        c.style.width = W + 'px'; c.style.height = H + 'px';
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const cell = 16;
+        const cols = Math.ceil(W / cell) + 1, rows2 = Math.ceil(H / cell) + 1;
+        grid = new Array(cols * rows2);
+        for (let i = 0; i < grid.length; i++) {
+          grid[i] = { ch: syms[(Math.random() * syms.length) | 0], glow: 0 };
+        }
+      };
+      resize();
+      const onResize = () => resize();
+      window.addEventListener('resize', onResize);
+      const mouse = { x: -9999, y: -9999 };
+      row.addEventListener('mousemove', (e) => {
+        const r = row.getBoundingClientRect();
+        mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+      });
+      row.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+      const draw = () => {
+        ctx.clearRect(0, 0, W, H);
+        const cell = 16, cols = Math.ceil(W / cell) + 1;
+        for (let i = 0; i < grid.length; i++) {
+          if (Math.random() < 0.008) grid[i].ch = syms[(Math.random() * syms.length) | 0];
+          const c2 = i % cols, r2 = (i / cols) | 0;
+          const px = c2 * cell + cell / 2, py = r2 * cell + cell / 2;
+          const dx = px - mouse.x, dy = py - mouse.y;
+          const d = Math.hypot(dx, dy);
+          if (d < 130) {
+            const k = 1 - d / 130;
+            grid[i].glow = Math.min(1, grid[i].glow + k * 0.4);
+            if (Math.random() < k * 0.5) grid[i].ch = syms[(Math.random() * syms.length) | 0];
+          }
+          grid[i].glow *= 0.94;
+          const g = grid[i].glow;
+          if (g > 0.05) {
+            ctx.fillStyle = 'rgba(230,59,22,' + (0.25 + g * 0.75) + ')';
+            ctx.shadowColor = 'rgba(255,90,44,' + g + ')';
+            ctx.shadowBlur = 8 * g;
+            ctx.font = '12px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(grid[i].ch, px, py);
+          } else {
+            ctx.fillStyle = 'rgba(140,130,120,0.10)';
+            ctx.shadowBlur = 0;
+            ctx.font = '12px "JetBrains Mono", monospace';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(grid[i].ch, px, py);
+          }
+        }
+        rafs.push(requestAnimationFrame(draw));
+      };
+      draw();
+    });
+    this._rowCanvasCleanup = () => { rafs.forEach(id => cancelAnimationFrame(id)); };
+  }
+  setupClawd(root) {
+    const tl = root.querySelector('#scia-timeline');
+    const clawd = root.querySelector('.scia-clawd');
+    if (!tl || !clawd) return;
+    let lastX = 0, targetX = 0, currentX = 0, lastMoveAt = 0;
+    let idleStart = performance.now();
+    const onMove = (e) => {
+      const r = tl.getBoundingClientRect();
+      if (e.clientY < r.top - 50 || e.clientY > r.bottom + 50) return;
+      if (e.clientX < r.left - 30 || e.clientX > r.right + 30) return;
+      const x = Math.max(0, Math.min(r.width - 44, e.clientX - r.left - 22));
+      targetX = x;
+      lastMoveAt = performance.now();
+      if (Math.abs(targetX - lastX) > 6) clawd.classList.add('scia-clawd-walk');
+      lastX = targetX;
+    };
+    const onLeave = () => { targetX = 0; lastX = 0; };
+    tl.addEventListener('mousemove', onMove);
+    tl.addEventListener('mouseleave', onLeave);
+    const tagHere = root.querySelector('.scia-tag-here');
+    const tick = () => {
+      currentX += (targetX - currentX) * 0.18;
+      const t = (performance.now() - idleStart) * 0.001;
+      const floatY = Math.sin(t * 2) * 2;
+      clawd.style.transform = 'translate(' + currentX + 'px,calc(-50% + ' + floatY + 'px))';
+      if (performance.now() - lastMoveAt > 220) clawd.classList.remove('scia-clawd-walk');
+      if (tagHere && tl) {
+        const tlW = tl.getBoundingClientRect().width;
+        const clawdCenter = currentX + 40;
+        const cCenter = tlW * 0.5;
+        const dist = Math.abs(clawdCenter - cCenter);
+        const raise = dist < 130 ? 1 : 0;
+        const offset = raise ? -54 : 0;
+        tagHere.style.transform = 'translateY(' + offset + 'px)';
+      }
+      this._clawdRAF = requestAnimationFrame(tick);
+    };
+    tick();
+    this._clawdCleanup = () => {
+      cancelAnimationFrame(this._clawdRAF);
+      tl.removeEventListener('mousemove', onMove);
+      tl.removeEventListener('mouseleave', onLeave);
+    };
+  }
+  setupManifestoUnderline(root) {
+    const syms = '<>{}[]()/\\#%&*+=-_:;?01'.split('');
+    // Helper: embrulha cada caractere de texto num <span class="scia-sym">, preservando filhos
+    const wrapChars = (el) => {
+      if (el.__sciaWrapped) return;
+      el.__sciaWrapped = true;
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      const texts = [];
+      let node;
+      while ((node = walker.nextNode())) {
+        if (node.nodeValue.trim()) texts.push(node);
+      }
+      texts.forEach((t) => {
+        const frag = document.createDocumentFragment();
+        const chars = t.nodeValue.split('');
+        chars.forEach((c) => {
+          if (c === ' ' || c === '\n') {
+            frag.appendChild(document.createTextNode(c));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'scia-sym';
+            span.textContent = c;
+            frag.appendChild(span);
+          }
+        });
+        t.parentNode.replaceChild(frag, t);
+      });
+    };
+    // Scramble genérico pra qualquer [data-scramble]
+    const setupScramble = (el) => {
+      wrapChars(el);
+      const spans = Array.from(el.querySelectorAll('.scia-sym'));
+      spans.forEach(s => { if (!s.dataset.orig) s.dataset.orig = s.textContent; });
+      const maxAtOnce = 3; // até 3 letras trocadas por vez
+      let activeSet = new Set(); // letras atualmente "embaralhadas"
+      const restore = (s) => {
+        if (!s) return;
+        s.textContent = s.dataset.orig;
+        activeSet.delete(s);
+      };
+      const scramble = () => {
+        // Garante que tem só 3 ativas por vez
+        if (activeSet.size >= maxAtOnce) return;
+        const slot = maxAtOnce - activeSet.size;
+        // Coleta letras disponíveis (que não estão já embaralhadas)
+        const available = spans.filter(s => !activeSet.has(s));
+        if (!available.length) return;
+        for (let i = 0; i < slot; i++) {
+          if (!available.length) break;
+          const idx = (Math.random() * available.length) | 0;
+          const s = available.splice(idx, 1)[0];
+          s.textContent = syms[(Math.random() * syms.length) | 0];
+          activeSet.add(s);
+          if (s._restoreTo) clearTimeout(s._restoreTo);
+          // Restaura rápido: 60ms depois (era 70ms) — texto fica visível
+          s._restoreTo = setTimeout(() => restore(s), 60);
+        }
+      };
+      const on = () => {
+        el.classList.add('scia-scramble-on');
+        if (el._scrambleIv) return;
+        scramble();
+        el._scrambleIv = setInterval(scramble, 140);
+      };
+      const off = () => {
+        el.classList.remove('scia-scramble-on');
+        if (el._scrambleIv) { clearInterval(el._scrambleIv); el._scrambleIv = null; }
+        activeSet.clear();
+        spans.forEach(s => {
+          if (s._restoreTo) { clearTimeout(s._restoreTo); s._restoreTo = null; }
+          s.textContent = s.dataset.orig;
+        });
+      };
+      el.addEventListener('mouseenter', on);
+      el.addEventListener('mouseleave', off);
+    };
+    // 1) Manifesto inferior (h3.scia-uline) — comportamento original
+    root.querySelectorAll('h3.scia-uline').forEach(h => {
+      const card = h.parentElement;
+      if (!card) return;
+      const spans = Array.from(h.querySelectorAll('.scia-sym'));
+      spans.forEach(s => { if (!s.dataset.orig) s.dataset.orig = s.textContent; });
+      const on = () => {
+        card.classList.add('scia-underline-on');
+        if (h._scrambleIv) return;
+        h._scrambleIv = setInterval(() => {
+          const s = spans[(Math.random() * spans.length) | 0];
+          if (!s || !s.dataset.orig) return;
+          s.textContent = syms[(Math.random() * syms.length) | 0];
+          if (s._restoreTo) clearTimeout(s._restoreTo);
+          s._restoreTo = setTimeout(() => { s.textContent = s.dataset.orig; }, 70);
+        }, 180);
+      };
+      const off = () => {
+        card.classList.remove('scia-underline-on');
+        if (h._scrambleIv) { clearInterval(h._scrambleIv); h._scrambleIv = null; }
+        spans.forEach(s => {
+          if (s._restoreTo) { clearTimeout(s._restoreTo); s._restoreTo = null; }
+          s.textContent = s.dataset.orig;
+        });
+      };
+      card.addEventListener('mouseenter', on);
+      card.addEventListener('mouseleave', off);
+    });
+    // 2) Elementos com data-scramble (ex: subtítulo do hero) — scrambling rápido
+    root.querySelectorAll('[data-scramble]').forEach(setupScramble);
+  }
+  setupManifestoGlitch(root) {
+    // Encontra parágrafos que contenham spans .scia-gw
+    const words = Array.from(root.querySelectorAll('.scia-gw'));
+    if (!words.length) return;
+    words.forEach((w) => {
+      // Garante que data-t existe (caso o autor não tenha colocado)
+      if (!w.hasAttribute('data-t')) w.setAttribute('data-t', w.textContent);
+    });
+    let active = null;
+    let resetTimer = null;
+    const fire = (word) => {
+      if (active === word) return;
+      if (active) active.classList.remove('scia-gw-on');
+      active = word;
+      // Reinicia a animação removendo e re-adicionando a classe após 1 frame
+      word.classList.remove('scia-gw-on');
+      // Força reflow pra reiniciar as keyframes
+      void word.offsetWidth;
+      word.classList.add('scia-gw-on');
+      if (resetTimer) clearTimeout(resetTimer);
+      // Limpa a classe após 600ms (duração das keyframes)
+      resetTimer = setTimeout(() => {
+        if (active === word) {
+          word.classList.remove('scia-gw-on');
+          active = null;
+        }
+      }, 620);
+    };
+    // Encontra a palavra mais próxima do cursor a cada movimento
+    const onMove = (e) => {
+      const x = e.clientX, y = e.clientY;
+      let nearest = null, minD = 60; // px — só dispara se estiver perto
+      for (let i = 0; i < words.length; i++) {
+        const w = words[i];
+        const r = w.getBoundingClientRect();
+        const cx = (r.left + r.right) / 2;
+        const cy = (r.top + r.bottom) / 2;
+        const d = Math.hypot(cx - x, cy - y);
+        if (d < minD) { minD = d; nearest = w; }
+      }
+      if (nearest) fire(nearest);
+    };
+    // Anexa o listener no documento (só precisa ser uma vez)
+    document.addEventListener('mousemove', onMove, { passive: true });
+    this._gwCleanup = () => {
+      document.removeEventListener('mousemove', onMove);
+      if (resetTimer) clearTimeout(resetTimer);
+      if (active) active.classList.remove('scia-gw-on');
+    };
+  }
+  setupAboutCards(root) {
+    const cards = Array.from(root.querySelectorAll('.scia-about-card'));
+    if (!cards.length) return;
+    cards.forEach((card) => {
+      let raf = null;
+      const move = (e) => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          // Translação segue o mouse até 14px (efeito magnético)
+          card.style.transform = 'translate(' + (x * 0.35) + 'px,' + (y * 0.35) + 'px)';
+        });
+      };
+      const leave = () => {
+        if (raf) cancelAnimationFrame(raf);
+        card.style.transform = 'translate(0,0)';
+      };
+      card.addEventListener('pointermove', move);
+      card.addEventListener('pointerleave', leave);
+    });
+  }
+  renderVals() {
+    const faq = this.state.faq, step = this.state.step;
+    const faqToggles = [0, 1, 2, 3, 4, 5].map(i => () => this.setState(s => ({ faq: s.faq === i ? -1 : i })));
+    const stepToggles = [0, 1, 2, 3].map(i => () => this.setState(s => ({ step: s.step === i ? -1 : i })));
+    return {
+      root: this.root,
+      heroVid: this.heroVid,
+      bioOpen: this.state.bio,
+      openBio: () => { try { document.body.style.overflow = 'hidden'; } catch (e) {} this.setState({ bio: true }); },
+      closeBio: () => { try { document.body.style.overflow = ''; } catch (e) {} this.setState({ bio: false }); },
+      stop: (e) => { if (e && e.stopPropagation) e.stopPropagation(); },
+      showPortrait: this.props.heroPortrait ?? true,
+      showPrices: this.props.showAgentPrices ?? true,
+      faqToggles,
+      faqOpen: [0, 1, 2, 3, 4, 5].map(i => faq === i),
+      faqIcon: [0, 1, 2, 3, 4, 5].map(i => faq === i ? '–' : '+'),
+      stepToggles,
+      stepOpen: [0, 1, 2, 3].map(i => step === i),
+      stepIcon: [0, 1, 2, 3].map(i => step === i ? '–' : '+')
+    };
+  }
+}
+</script>
+</body>
+</html>
