@@ -1,63 +1,262 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Estrateg[IA] — Ecossistema</title>
-  <link rel="icon" type="image/png" href="./hud-ds/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-  <style>
-    *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:#070605;color:#F2F0EC;font-family:'Poppins',sans-serif;min-height:100vh}
-    body{display:flex;align-items:center;justify-content:center;padding:clamp(24px,4vw,48px);background:radial-gradient(900px 520px at 78% -10%,rgba(230,59,22,.32),transparent 60%),radial-gradient(640px 380px at -4% 30%,rgba(230,59,22,.10),transparent 60%),#070605}
-    .wrap{max-width:880px;width:100%;display:flex;flex-direction:column;gap:48px;align-items:flex-start}
-    .brand{font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em}
-    .brand span{color:#E63B16}
-    .badge{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#FF6A3D;border:1px solid rgba(230,59,22,.4);border-radius:999px;padding:7px 14px;background:rgba(11,10,9,.4)}
-    .dot{width:6px;height:6px;border-radius:50%;background:#FF6A3D;animation:blink 1.4s step-end infinite}
-    @keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
-    h1{font-family:'Funnel Display',sans-serif;font-weight:800;font-size:clamp(48px,8vw,108px);line-height:.92;letter-spacing:-.03em;margin:0;text-transform:uppercase;max-width:760px}
-    h1 span{color:#E63B16}
-    p.lead{max-width:560px;font-size:clamp(15px,1.7vw,19px);line-height:1.55;color:#B7B1A9;margin:0}
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;width:100%}
-    a.card{position:relative;display:flex;flex-direction:column;gap:12px;padding:28px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(255,255,255,.02);text-decoration:none;color:#F2F0EC;transition:border-color .35s,background .35s,transform .35s cubic-bezier(.16,1,.3,1)}
-    a.card:hover{border-color:rgba(230,59,22,.55);background:rgba(230,59,22,.06);transform:translateY(-4px)}
-    .num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;color:#8A847C;text-transform:uppercase}
-    .card h2{font-family:'Funnel Display',sans-serif;font-weight:700;font-size:26px;margin:0;line-height:1.05}
-    .card p{font-size:14px;line-height:1.55;color:#B7B1A9;margin:0}
-    .arrow{position:absolute;top:24px;right:24px;font-size:22px;color:#E63B16}
-  </style>
+<meta charset="UTF-8">
+<title>ESTRATEG[IA] — Inteligência que move a gestão em saúde</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hub central do ecossistema Estrateg[IA] — IA para gestores e coordenadores da saúde.">
+<link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --brand:#F23C00;--brand-soft:#FF5B19;
+  --bg:#0A0A0A;--bg-2:#141414;--bg-3:#1F1F1F;
+  --line:#2A2A2A;--line-soft:#1A1A1A;
+  --text:#FAFAFA;--muted:#888;--muted-2:#555;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui,sans-serif;line-height:1.4;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden}
+
+/* ===== TOP BAND ===== */
+.topband{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 28px;border-bottom:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:11px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  position:sticky;top:0;background:var(--bg);z-index:50;
+}
+.topband .left{display:flex;gap:24px;align-items:center}
+.topband .dot{width:8px;height:8px;background:var(--brand);border-radius:50%;display:inline-block;box-shadow:0 0 8px var(--brand)}
+.topband .pill{border:1px solid var(--line);padding:3px 8px;color:var(--text)}
+
+/* ===== HERO ===== */
+.hero{padding:80px 28px 60px;max-width:1200px;margin:0 auto;position:relative}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--brand),transparent);
+}
+.hero-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brand);margin-bottom:32px;display:flex;align-items:center;gap:8px}
+.hero-tag::before{content:'';width:24px;height:1px;background:var(--brand)}
+
+.hero h1{
+  font-size:clamp(56px,11vw,140px);font-weight:700;letter-spacing:-0.05em;
+  line-height:.92;margin:0;
+}
+.hero h1 .strat{display:block;color:var(--text)}
+.hero h1 .ia{display:block;color:var(--brand);font-weight:300;font-style:italic;font-size:.45em;letter-spacing:0;margin-top:12px;padding-left:8px}
+
+.hero-sub{max-width:620px;margin-top:40px;font-size:18px;color:var(--muted);line-height:1.5}
+.hero-sub strong{color:var(--text);font-weight:600}
+
+.hero-meta{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+  margin-top:80px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.meta-cell{padding:18px 0;border-right:1px solid var(--line)}
+.meta-cell:last-child{border-right:0}
+.meta-cell .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.meta-cell .v{font-size:24px;font-weight:700;color:var(--text);letter-spacing:-0.02em}
+.meta-cell .v.brand{color:var(--brand)}
+
+/* ===== SECTION ===== */
+.section{max-width:1200px;margin:0 auto;padding:60px 28px}
+.section-head{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:32px;
+}
+.section-head .title{font-size:42px;font-weight:700;letter-spacing:-0.03em;line-height:1}
+.section-head .meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:right;letter-spacing:.06em;text-transform:uppercase}
+
+/* ===== PROJECTS GRID ===== */
+.projects{display:grid;gap:0;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+@media(max-width:880px){.projects{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.projects{grid-template-columns:1fr}}
+.proj{
+  position:relative;padding:28px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  text-decoration:none;color:inherit;display:block;background:var(--bg);
+  transition:background .2s;
+}
+.proj:nth-child(3n){border-right:0}
+.proj:hover{background:var(--bg-2)}
+.proj:hover .arrow{transform:translateX(4px)}
+.proj .corner{
+  position:absolute;top:12px;right:12px;width:14px;height:14px;
+  border-top:1px solid var(--brand);border-right:1px solid var(--brand);
+}
+.proj .lot{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.proj .lot .num{color:var(--brand);margin-right:6px}
+.proj h3{font-size:22px;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1}
+.proj .desc{font-size:13px;color:var(--muted);line-height:1.5;min-height:42px}
+.proj .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px}
+.proj .tag{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line);color:var(--muted)}
+.proj .tag.brand{border-color:var(--brand);color:var(--brand)}
+.proj .arrow{position:absolute;bottom:20px;right:20px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--brand);transition:transform .2s}
+
+/* ===== FOOTER ===== */
+footer{
+  border-top:1px solid var(--line);margin-top:60px;padding:40px 28px;
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+footer .row{display:flex;justify-content:space-between;align-items:center;max-width:1200px;margin:0 auto}
+footer a{color:var(--text);text-decoration:none}
+footer a:hover{color:var(--brand)}
+
+/* ===== HOVER FX ===== */
+@media(hover:hover){
+  .hero h1 .ia{transition:color .3s}
+  .hero:hover h1 .ia{color:var(--brand-soft)}
+}
+</style>
 </head>
 <body>
-  <div class="wrap">
-    <div style="display:flex;flex-direction:column;gap:18px">
-      <div class="brand">Estrateg<span>[IA]</span></div>
-      <span class="badge"><span class="dot"></span>Ecossistema online</span>
+
+<!-- TOP BAND -->
+<div class="topband">
+  <div class="left">
+    <span><span class="dot"></span> ONLINE</span>
+    <span class="pill">LOTE 01 / 06</span>
+    <span>v1.0</span>
+  </div>
+  <div class="left">
+    <a href="https://github.com/rosakethllyn-blip" style="color:var(--muted);text-decoration:none">github ↗</a>
+    <span>29.06.2026</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Sistema de IA para Gestão em Saúde</div>
+  <h1>
+    <span class="strat">Estrateg</span>
+    <span class="ia">[IA]</span>
+  </h1>
+  <p class="hero-sub">
+    Inteligência que move a gestão em saúde.
+    <strong>Estratégia + IA</strong> para coordenadores que precisam transformar
+    papelada, protocolos e relatórios em entregáveis prontos para a diretoria.
+  </p>
+
+  <div class="hero-meta">
+    <div class="meta-cell">
+      <div class="k">Lote</div>
+      <div class="v">01 / 06</div>
     </div>
-    <h1>O painel<br>de <span>comando.</span></h1>
-    <p class="lead">Tudo o que você precisa do ecossistema Estrateg[IA] num lugar só. Escolha por onde seguir.</p>
-    <div class="cards">
-      <a class="card" href="./project/Estrateg%5BIA%5D.dc.html">
-        <span class="arrow">↗</span>
-        <span class="num">[ 01 ] · Web · site oficial</span>
-        <h2>Site Estrateg[IA]</h2>
-        <p>O site completo: canal, skills prontas, serviço personalizado e a bio da Rosa.</p>
-      </a>
-      <a class="card" href="./hud-ds/HUD%20Estrateg%5BIA%5D.dc.html">
-        <span class="arrow">↗</span>
-        <span class="num">[ 02 ] · Painel · central de acesso</span>
-        <h2>Painel de comando</h2>
-        <p>Hub rápido com todos os links importantes: site, glossário, plano de ação, design system.</p>
-      </a>
-      <a class="card" href="./hud-ds/glossario/">
-        <span class="arrow">↗</span>
-        <span class="num">[ 03 ] · Referência · termos</span>
-        <h2>Glossário Claude Code</h2>
-        <p>197 termos de Claude Code & Vibe Coding, explicados sem jargão pra gestor de saúde.</p>
-      </a>
+    <div class="meta-cell">
+      <div class="k">Projetos</div>
+      <div class="v">6</div>
+    </div>
+    <div class="meta-cell">
+      <div class="k">Termos no glossário</div>
+      <div class="v">197</div>
+    </div>
+    <div class="meta-cell">
+      <div class="k">Status</div>
+      <div class="v brand">ATIVO</div>
     </div>
   </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section">
+  <div class="section-head">
+    <h2 class="title">Projetos do lote</h2>
+    <div class="meta">
+      <div>06 entregas</div>
+      <div style="margin-top:6px">1º trimestre / 2026</div>
+    </div>
+  </div>
+
+  <div class="projects">
+
+    <a class="proj" href="https://rosakethllyn-blip.github.io/modo-ia-saude-glossario/" target="_blank" rel="noopener">
+      <div class="corner"></div>
+      <div class="lot"><span class="num">L01</span>/ Glossário</div>
+      <h3>197 termos de Claude Code</h3>
+      <p class="desc">Vocabulário completo de Claude Code & Vibe Coding explicado com analogias hospitalares.</p>
+      <div class="tags">
+        <span class="tag brand">Live</span>
+        <span class="tag">PT-BR</span>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+
+    <a class="proj" href="https://rosakethllyn-blip.github.io/estrategia-ds/" target="_blank" rel="noopener">
+      <div class="corner"></div>
+      <div class="lot"><span class="num">L02</span>/ Design System</div>
+      <h3>Estrateg[IA] DS</h3>
+      <p class="desc">Tokens, componentes, padrões e templates. Apple-inspired em preto e laranja.</p>
+      <div class="tags">
+        <span class="tag brand">Tokens</span>
+        <span class="tag">Storybook</span>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+
+    <a class="proj" href="https://rosakethllyn-blip.github.io/estrategia-plano/" target="_blank" rel="noopener">
+      <div class="corner"></div>
+      <div class="lot"><span class="num">L03</span>/ Plano</div>
+      <h3>Plano de Ação 90 dias</h3>
+      <p class="desc">Site, marca, comunidade — semana a semana. O roadmap da temporada 1.</p>
+      <div class="tags">
+        <span class="tag">.md</span>
+        <span class="tag">Roadmap</span>
+      </div>
+      <div class="arrow">↗</div>
+    </a>
+
+    <a class="proj" href="#" onclick="event.preventDefault();alert('Em breve — rodando local em /motion/modo-ia-ds/')">
+      <div class="corner"></div>
+      <div class="lot"><span class="num">L04</span>/ Motion</div>
+      <h3>modo-ia-ds · Vue 3</h3>
+      <p class="desc">Porta Vue 3 do design system. Vuesax-style orange/coral. Local.</p>
+      <div class="tags">
+        <span class="tag">Vue 3</span>
+        <span class="tag">Vite</span>
+        <span class="tag brand">Local</span>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="proj" href="https://rosakethllyn-blip.github.io/nurseflow/" target="_blank" rel="noopener">
+      <div class="corner"></div>
+      <div class="lot"><span class="num">L05</span>/ App</div>
+      <h3>NurseFlow · RT</h3>
+      <p class="desc">App de plantão para residentes e médicos. React Native + Expo SDK 54 + Supabase.</p>
+      <div class="tags">
+        <span class="tag">RN</span>
+        <span class="tag">Supabase</span>
+        <span class="tag">RevenueCat</span>
+        <span class="tag brand">Local</span>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+    <a class="proj" href="https://rosakethllyn-blip.github.io/enfacil-app/" target="_blank" rel="noopener">
+      <div class="corner"></div>
+      <div class="lot"><span class="num">L06</span>/ App</div>
+      <h3>EnfaCil</h3>
+      <p class="desc">Main healthcare app. React 19 + Vite + Firebase. Gestão para enfermagem.</p>
+      <div class="tags">
+        <span class="tag">React 19</span>
+        <span class="tag">Firebase</span>
+        <span class="tag brand">Local</span>
+      </div>
+      <div class="arrow">→</div>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  <div class="row">
+    <div>ESTRATEG[IA] · inteligência que move a gestão em saúde</div>
+    <div><a href="https://github.com/rosakethllyn-blip">github/rosakethllyn-blip ↗</a></div>
+  </div>
+</footer>
+
 </body>
 </html>

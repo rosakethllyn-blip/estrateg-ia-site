@@ -18,7 +18,8 @@
       "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\support.js\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\image-slot.js\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
       "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\hero-poster.jpg\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\rosa-card.png\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
       "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\rosa.png\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\readme.md\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\README.md\" && cp -r \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\assets\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
-      "Bash(cp \"/c/Claude Code/estrategia/estrategia hud e ds/project/HUD Estrateg[IA].dc.html\" \"/c/Claude Code/estrategia/estrat-g-ia-site-design/hud-ds/\" 2>&1 | tail -3 && ls \"/c/Claude Code/estrategia/estrat-g-ia-site-design/hud-ds\" 2>&1)"
+      "Bash(cp \"/c/Claude Code/estrategia/estrategia hud e ds/project/HUD Estrateg[IA].dc.html\" \"/c/Claude Code/estrategia/estrat-g-ia-site-design/hud-ds/\" 2>&1 | tail -3 && ls \"/c/Claude Code/estrategia/estrat-g-ia-site-design/hud-ds\" 2>&1)",
+      "Bash(cd \"/c/Claude Code/estrategia\" && find . -maxdepth 3 -name \"*HUD*\" -o -name \"*hub*\" 2>/dev/null | head -20)"
     ]
   }
 }
