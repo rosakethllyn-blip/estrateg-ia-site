@@ -6,7 +6,19 @@
       "Bash(gh auth *)",
       "Bash(git init *)",
       "Bash(gh repo *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit -m 'Site Estrateg[IA] — IA aplicada à estratégia em saúde *)",
+      "Bash(git config *)",
+      "Bash(git push *)",
+      "Bash(gh api *)",
+      "Bash(git commit *)",
+      "Bash(ls -la \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\" 2>&1 | head -30)",
+      "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\design-system.html\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\HUD Estrateg[IA].dc.html\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
+      "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\styles.css\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\favicon.png\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
+      "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\support.js\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\image-slot.js\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
+      "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\hero-poster.jpg\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\rosa-card.png\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
+      "Bash(cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\rosa.png\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\" && cp \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\readme.md\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\README.md\" && cp -r \"C:\\\\Claude Code\\\\estrategia\\\\estrategia hud e ds\\\\project\\\\assets\" \"C:\\\\Claude Code\\\\estrategia\\\\estrat-g-ia-site-design\\\\hud-ds\\\\\")",
+      "Bash(cp \"/c/Claude Code/estrategia/estrategia hud e ds/project/HUD Estrateg[IA].dc.html\" \"/c/Claude Code/estrategia/estrat-g-ia-site-design/hud-ds/\" 2>&1 | tail -3 && ls \"/c/Claude Code/estrategia/estrat-g-ia-site-design/hud-ds\" 2>&1)"
     ]
   }
 }
