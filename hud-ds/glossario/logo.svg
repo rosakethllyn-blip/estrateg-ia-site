@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Camada_2" data-name="Camada 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 335.66 66.54">
+  <defs>
+    <style>
+      .cls-1 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-1, .cls-2, .cls-3 {
+        fill: #1a1b1c;
+        font-family: FunnelDisplay-Bold, 'Funnel Display';
+        font-variation-settings: 'wght' 700;
+        font-weight: 700;
+      }
+
+      .cls-2, .cls-4 {
+        letter-spacing: 0em;
+      }
+
+      .cls-4, .cls-5 {
+        fill: #e63b18;
+        font-family: FunnelDisplay-Light, 'Funnel Display';
+        font-variation-settings: 'wght' 300;
+        font-weight: 300;
+      }
+
+      .cls-3 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-5 {
+        letter-spacing: .04em;
+      }
+
+      .cls-6 {
+        font-size: 59.82px;
+      }
+    </style>
+  </defs>
+  <g id="Camada_1-2" data-name="Camada 1">
+    <text class="cls-6" transform="translate(0 50.09)"><tspan class="cls-2" x="0" y="0">Est</tspan><tspan class="cls-3" x="88.43" y="0">r</tspan><tspan class="cls-1" x="112.45" y="0">ateg</tspan><tspan class="cls-5" x="241.25" y="0">[</tspan><tspan class="cls-4" x="262.09" y="0">IA]</tspan></text>
+  </g>
+</svg>
