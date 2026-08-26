@@ -89,15 +89,16 @@
   }
 
   /* Card Rosa do hero — no mobile sai do canto e entra no fluxo,
-     centralizado logo abaixo dos botões (não sobrepõe mais o texto) */
-  sc-if > div[data-tilt] {
+     centralizado logo abaixo dos botões (não sobrepõe mais o texto).
+     Obs: o React renderiza o card como filho direto do <header>, não de <sc-if>. */
+  header#topo > div[data-tilt] {
     position: static !important;
     right: auto !important;
     bottom: auto !important;
     left: auto !important;
     top: auto !important;
     width: clamp(150px, 44vw, 188px) !important;
-    margin: 30px auto 0 !important;
+    margin: 34px auto 0 !important;
     transform: none !important;
   }
 
