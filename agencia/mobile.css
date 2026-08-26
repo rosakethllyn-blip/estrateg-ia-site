@@ -1,0 +1,382 @@
+/* ============================================
+   ESTRATÉG[IA] · MOBILE RESPONSIVE OVERRIDES
+   Não altera nada acima de 768px (desktop intacto).
+   Breakpoint principal: 768px (tablet) e 480px (celular pequeno).
+   ============================================ */
+
+/* ---------- Tablet (até 900px) ---------- */
+@media (max-width: 900px) {
+  /* Nav: esconde labels intermediários, deixa só essenciais */
+  nav > div:nth-child(2) {
+    gap: 18px !important;
+    font-size: 11.5px !important;
+  }
+}
+
+/* ---------- Mobile (até 768px) ---------- */
+@media (max-width: 768px) {
+
+  /* ===== TICKER ===== */
+  /* Reduz o tamanho e velocidade pra caber melhor */
+  div[style*="animation:scia-marquee 38s"] {
+    font-size: 10px !important;
+    letter-spacing: .15em !important;
+    padding: 7px 0 !important;
+  }
+
+  /* ===== NAV ===== */
+  /* Esconde o nav inteiro do meio (links) no mobile e mostra um menu compacto */
+  nav {
+    padding: 12px 5vw !important;
+    gap: 12px !important;
+  }
+  nav > div:nth-child(2) {
+    display: none !important; /* some os links no mobile */
+  }
+  nav > a {
+    padding: 9px 16px !important;
+    font-size: 12.5px !important;
+  }
+  nav > a > svg {
+    width: 13px !important;
+    height: 13px !important;
+  }
+  nav > a:nth-child(1) {
+    font-size: 18px !important;
+  }
+  /* Esconde o botão "Agendar conversa" do nav no mobile (já tem no hero) */
+  nav > a[data-magnetic] {
+    display: none !important;
+  }
+
+  /* ===== HERO ===== */
+  header#topo {
+    padding: 90px 5vw 110px !important;
+    min-height: 92vh !important;
+  }
+  /* Badge topo do hero */
+  header#topo > div > div:first-child {
+    font-size: 10.5px !important;
+    letter-spacing: .18em !important;
+    padding: 7px 14px !important;
+    margin-bottom: 26px !important;
+  }
+  /* H1 Estrateg[IA] */
+  header#topo h1 {
+    font-size: clamp(48px, 16vw, 96px) !important;
+    line-height: .86 !important;
+    letter-spacing: -.03em !important;
+  }
+  /* Subtítulo */
+  header#topo p {
+    font-size: clamp(16px, 4.5vw, 20px) !important;
+    line-height: 1.32 !important;
+    margin-top: 28px !important;
+    padding: 0 8px;
+  }
+  /* Botões do hero: empilha e centraliza melhor */
+  header#topo > div > div:last-child {
+    margin-top: 36px !important;
+    gap: 12px !important;
+  }
+  header#topo a[data-magnetic] {
+    padding: 15px 24px !important;
+    font-size: 14px !important;
+  }
+  /* Link "ver skills prontas" no hero */
+  header#topo a.scia-link {
+    font-size: 11.5px !important;
+  }
+
+  /* Card Rosa do hero — coloca acima do título ou em outro canto */
+  sc-if > div[data-tilt] {
+    width: clamp(110px, 28vw, 150px) !important;
+    right: 16px !important;
+    bottom: 70px !important;
+  }
+
+  /* Indicador "role para baixo" - esconde no mobile (economiza espaço) */
+  div[style*="ROLE PARA BAIXO"],
+  div[style*="role para baixo"] {
+    display: none !important;
+  }
+
+  /* ===== MARQUEE SLIM ===== */
+  div[style*="animation:scia-marquee 34s"] {
+    font-size: 11px !important;
+    letter-spacing: .15em !important;
+  }
+
+  /* ===== MANIFESTO ===== */
+  section[style*="padding:clamp(56px,7vw,100px) 6vw"] {
+    padding: clamp(48px, 8vw, 80px) 5vw !important;
+  }
+  /* Os 3 cards de Tempo/Clareza/Ferramentas: empilha */
+  div[style*="grid-template-columns:repeat(3,1fr)"] {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  /* ===== COMO FUNCIONA (3 rows) ===== */
+  section#canal h2 {
+    font-size: clamp(32px, 9vw, 48px) !important;
+  }
+  /* Rows: empilha a numeração em cima do conteúdo */
+  a.scia-row {
+    grid-template-columns: 1fr auto !important;
+    gap: 14px !important;
+    padding: 24px 18px !important;
+  }
+  a.scia-row > span:first-of-type {
+    grid-column: 1 / -1 !important;
+  }
+  a.scia-row > canvas {
+    display: none !important; /* esconde canvas hacker no mobile (perf) */
+  }
+  a.scia-row > span:nth-child(2) {
+    font-size: 11px !important;
+  }
+  a.scia-row > span:nth-child(3) {
+    font-size: clamp(20px, 5.5vw, 26px) !important;
+  }
+  a.scia-row > span:nth-child(4) {
+    grid-row: 3;
+    grid-column: 2;
+  }
+
+  /* ===== FEATURES (5 cards) ===== */
+  div[style*="grid-template-columns:repeat(5,1fr)"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  div[style*="grid-template-columns:repeat(5,1fr)"] > div {
+    padding: 22px 18px !important;
+    border-right: 1px solid rgba(20,17,15,.12) !important;
+    border-bottom: 1px solid rgba(20,17,15,.12);
+  }
+  /* Última linha de cards (4 e 5) sem border-bottom */
+  div[style*="grid-template-columns:repeat(5,1fr)"] > div:nth-child(5) {
+    grid-column: 1 / -1 !important;
+    border-right: none !important;
+  }
+  /* Esconde canvas nos cards no mobile */
+  .scia-card > canvas {
+    display: none !important;
+  }
+  .scia-card .scia-card-num {
+    margin-bottom: 36px !important;
+  }
+  .scia-card h3 {
+    font-size: 16px !important;
+  }
+
+  /* ===== PARA QUEM É (2 colunas) ===== */
+  div[style*="grid-template-columns:1.1fr .9fr"] {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  /* Mascote flutuante Rosa */
+  div[style*="width:380px;height:380px"] {
+    width: 280px !important;
+    height: 220px !important;
+    margin: 0 auto;
+  }
+  div[style*="width:380px;height:380px"] > div.scia-mascot {
+    width: 240px !important;
+    height: 180px !important;
+  }
+  /* Itens de sinais - texto menor */
+  div[style*="display:flex;align-items:center;gap:18px"] {
+    padding: 14px 0 !important;
+  }
+  div[style*="display:flex;align-items:center;gap:18px"] > span:last-child {
+    font-size: 13.5px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* ===== JORNADA (4 colunas timeline) ===== */
+  section#jornada h2 {
+    font-size: clamp(32px, 9vw, 48px) !important;
+    margin-bottom: 40px !important;
+  }
+  /* Esconde a linha tracejada do topo no mobile */
+  div[style*="position:absolute;left:0;right:0;top:7px"] {
+    display: none !important;
+  }
+  /* Esconde o caranguejo Clawd no mobile */
+  .scia-clawd {
+    display: none !important;
+  }
+  /* 4 colunas viram 2x2 grid */
+  #scia-timeline {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 28px !important;
+  }
+  #scia-timeline > div:not([style*="position:absolute"]) {
+    text-align: left;
+  }
+  /* Esconde tag "VOCÊ ESTÁ AQUI" no mobile (pouco espaço) */
+  .scia-tag-here {
+    display: none !important;
+  }
+
+  /* ===== SERVICO (accordion) ===== */
+  section#servico h2 {
+    font-size: clamp(32px, 9vw, 48px) !important;
+  }
+  .scia-acc-item button {
+    padding: 20px 18px !important;
+  }
+  .scia-acc-item button > span {
+    gap: 14px !important;
+  }
+  .scia-acc-item button > span > span:nth-child(2) {
+    font-size: 17px !important;
+  }
+  .scia-acc-content > div {
+    padding: 0 18px 20px 50px !important;
+    font-size: 14.5px !important;
+  }
+  /* Modal da Rosa: ocupa mais largura */
+  section#servico + * div[data-tilt] {
+    max-width: 95vw !important;
+    grid-template-columns: 1fr !important;
+  }
+  section#servico + * div[data-tilt] > div:first-child {
+    min-height: 260px !important;
+    border-radius: 20px 20px 0 0 !important;
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  /* ===== AGENTES (3 cards de planos) ===== */
+  div[style*="grid-template-columns:repeat(3,1fr);gap:24px"] {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+  /* Cards de planos: menos padding */
+  div[style*="grid-template-columns:repeat(3,1fr);gap:24px"] > div {
+    padding: 26px 22px !important;
+  }
+
+  /* ===== DEPOIMENTOS (carousel horizontal) ===== */
+  blockquote[style*="flex:0 0 360px"] {
+    flex: 0 0 84vw !important;
+    padding: 24px !important;
+  }
+  blockquote[style*="flex:0 0 360px"] p {
+    font-size: 15px !important;
+  }
+
+  /* ===== SOBRE ===== */
+  section#sobre > div {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+  section#sobre h2 {
+    font-size: clamp(32px, 9vw, 48px) !important;
+  }
+  /* Cards YouTube/Agentes/Serviço */
+  div[style*="display:flex;flex-wrap:wrap;gap:14px"] {
+    gap: 12px !important;
+  }
+  div[style*="display:flex;flex-wrap:wrap;gap:14px"] > div {
+    padding: 12px 18px !important;
+  }
+  div[style*="display:flex;flex-wrap:wrap;gap:14px"] > div > div:first-child {
+    font-size: 22px !important;
+  }
+
+  /* ===== FAQ ===== */
+  section#faq h2 {
+    font-size: clamp(30px, 8vw, 44px) !important;
+  }
+  section#faq button {
+    padding: 22px 4px !important;
+  }
+  section#faq button > span:first-child {
+    font-size: 16px !important;
+    line-height: 1.35 !important;
+  }
+
+  /* ===== FINAL CTA ===== */
+  section[style*="padding:clamp(64px,9vw,140px) 6vw"] {
+    padding: clamp(56px, 9vw, 100px) 5vw !important;
+  }
+  section[style*="padding:clamp(64px,9vw,140px) 6vw"] h2 {
+    font-size: clamp(32px, 10vw, 60px) !important;
+  }
+  section[style*="padding:clamp(64px,9vw,140px) 6vw"] > div > div:last-child {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  section[style*="padding:clamp(64px,9vw,140px) 6vw"] > div > div:last-child > a {
+    justify-content: center !important;
+    padding: 16px 24px !important;
+    font-size: 15px !important;
+  }
+
+  /* ===== FOOTER ===== */
+  footer > div:first-child {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  footer > div:nth-child(2) {
+    flex-direction: column !important;
+    gap: 6px !important;
+    text-align: center;
+  }
+  /* O "ESTRATÉG[IA]" gigante do rodapé */
+  footer > div:last-child {
+    font-size: clamp(48px, 18vw, 120px) !important;
+    letter-spacing: -.03em !important;
+  }
+}
+
+/* ---------- Celular pequeno (até 480px) ---------- */
+@media (max-width: 480px) {
+  /* 5 features viram 1 coluna em telas bem pequenas */
+  div[style*="grid-template-columns:repeat(5,1fr)"] {
+    grid-template-columns: 1fr !important;
+  }
+  div[style*="grid-template-columns:repeat(5,1fr)"] > div {
+    border-right: none !important;
+  }
+  div[style*="grid-template-columns:repeat(5,1fr)"] > div:last-child {
+    border-bottom: none !important;
+  }
+
+  /* Jornada timeline: 1 coluna */
+  #scia-timeline {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Hero H1 um pouco menor */
+  header#topo h1 {
+    font-size: 44px !important;
+  }
+  /* Subtítulo */
+  header#topo p {
+    font-size: 16px !important;
+  }
+
+  /* Reduz padding geral das seções */
+  section {
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
+  }
+
+  /* Cards About (YouTube/Agentes/Serviço) - 1 coluna */
+  div[style*="display:flex;flex-wrap:wrap;gap:14px"] {
+    flex-direction: column !important;
+  }
+  div[style*="display:flex;flex-wrap:wrap;gap:14px"] > div {
+    width: 100%;
+  }
+}
+
+/* ---------- Fix iOS / safe areas ---------- */
+@supports (padding: max(0px)) {
+  @media (max-width: 768px) {
+    nav { padding-left: max(5vw, env(safe-area-inset-left)) !important; padding-right: max(5vw, env(safe-area-inset-right)) !important; }
+  }
+}
